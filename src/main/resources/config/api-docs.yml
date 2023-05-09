@@ -1,0 +1,28 @@
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+  swagger:
+    enabled: true
+  springfox-data-rest:
+    enabled: false
+  path-mapping: "/"
+  springfox:
+    documentation:
+      enabled: true
+    swagger:
+      enabled: true
+
+swagger:
+  docket:
+    api:
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      schemes:
+        - "http"
+        - "https"
+      paths:
+        regex: "/api/.*"
+      select: "com.example.api"
