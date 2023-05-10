@@ -6,7 +6,7 @@ springfox:
     enabled: true
   springfox-data-rest:
     enabled: false
-  path-mapping: "/"
+  path-mapping: '/'
   springfox:
     documentation:
       enabled: true
@@ -17,12 +17,12 @@ swagger:
   docket:
     api:
       produces:
-        - "application/json"
+        - 'application/json'
       consumes:
-        - "application/json"
+        - 'application/json'
       schemes:
-        - "http"
-        - "https"
+        - 'http'
+        - 'https'
       paths:
-        regex: "/api/.*"
-      select: "com.example.api"
+        regex: '/**'
+      select: 'any'
