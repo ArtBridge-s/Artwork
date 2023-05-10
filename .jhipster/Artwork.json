@@ -1,0 +1,67 @@
+{
+  "applications": "*",
+  "changelogDate": "20230510070433",
+  "clientRootFolder": "Artwork",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "artwork",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "shortDescription",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "longDescription",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "imageUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "artistname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "makingday",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "UPLOAD_PENDING,REVISION_PENDING,DELETE_PENDING,OK"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "Artwork",
+  "name": "Artwork",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "comment",
+      "otherEntityRelationshipName": "artwork",
+      "relationshipName": "comments",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "view",
+      "otherEntityRelationshipName": "artwork",
+      "relationshipName": "views",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "like",
+      "otherEntityRelationshipName": "artwork",
+      "relationshipName": "likes",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

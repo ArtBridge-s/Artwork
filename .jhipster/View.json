@@ -1,0 +1,30 @@
+{
+  "applications": "*",
+  "changelogDate": "20230510070435",
+  "clientRootFolder": "Artwork",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "view",
+  "fields": [
+    {
+      "fieldName": "member",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "Artwork",
+  "name": "View",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "artwork",
+      "otherEntityRelationshipName": "views",
+      "relationshipName": "artwork",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity View.
+    -->
+    <changeSet id="20230510070435-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="artwork_id"
+                                 baseTableName="view"
+                                 constraintName="fk_view__artwork_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="artwork"/>
+    </changeSet>
+</databaseChangeLog>
