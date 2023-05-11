@@ -3,6 +3,10 @@ package com.artbridge.artwork.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,6 +17,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "jhi_like")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Like implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,23 +38,9 @@ public class Like implements Serializable {
     @JsonIgnoreProperties(value = { "comments", "views", "likes" }, allowSetters = true)
     private Artwork artwork;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-
-    public Long getId() {
-        return this.id;
-    }
-
     public Like id(Long id) {
         this.setId(id);
         return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getMember() {
-        return this.member;
     }
 
     public Like member(Long member) {
@@ -54,24 +48,10 @@ public class Like implements Serializable {
         return this;
     }
 
-    public void setMember(Long member) {
-        this.member = member;
-    }
-
-    public Artwork getArtwork() {
-        return this.artwork;
-    }
-
-    public void setArtwork(Artwork artwork) {
-        this.artwork = artwork;
-    }
-
     public Like artwork(Artwork artwork) {
         this.setArtwork(artwork);
         return this;
     }
-
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -88,14 +68,5 @@ public class Like implements Serializable {
     public int hashCode() {
         // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "Like{" +
-            "id=" + getId() +
-            ", member=" + getMember() +
-            "}";
     }
 }
