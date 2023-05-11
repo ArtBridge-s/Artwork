@@ -6,6 +6,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -16,6 +20,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "artwork")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Artwork implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,35 +59,24 @@ public class Artwork implements Serializable {
     @OneToMany(mappedBy = "artwork")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "artwork" }, allowSetters = true)
+    @ToString.Exclude
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "artwork")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "artwork" }, allowSetters = true)
+    @ToString.Exclude
     private Set<View> views = new HashSet<>();
 
     @OneToMany(mappedBy = "artwork")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "artwork" }, allowSetters = true)
+    @ToString.Exclude
     private Set<Like> likes = new HashSet<>();
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here
-
-    public Long getId() {
-        return this.id;
-    }
 
     public Artwork id(Long id) {
         this.setId(id);
         return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return this.title;
     }
 
     public Artwork title(String title) {
@@ -87,25 +84,9 @@ public class Artwork implements Serializable {
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getShortDescription() {
-        return this.shortDescription;
-    }
-
     public Artwork shortDescription(String shortDescription) {
         this.setShortDescription(shortDescription);
         return this;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getLongDescription() {
-        return this.longDescription;
     }
 
     public Artwork longDescription(String longDescription) {
@@ -113,25 +94,9 @@ public class Artwork implements Serializable {
         return this;
     }
 
-    public void setLongDescription(String longDescription) {
-        this.longDescription = longDescription;
-    }
-
-    public String getImageUrl() {
-        return this.imageUrl;
-    }
-
     public Artwork imageUrl(String imageUrl) {
         this.setImageUrl(imageUrl);
         return this;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getArtistname() {
-        return this.artistname;
     }
 
     public Artwork artistname(String artistname) {
@@ -139,38 +104,14 @@ public class Artwork implements Serializable {
         return this;
     }
 
-    public void setArtistname(String artistname) {
-        this.artistname = artistname;
-    }
-
-    public String getMakingday() {
-        return this.makingday;
-    }
-
     public Artwork makingday(String makingday) {
         this.setMakingday(makingday);
         return this;
     }
 
-    public void setMakingday(String makingday) {
-        this.makingday = makingday;
-    }
-
-    public Status getStatus() {
-        return this.status;
-    }
-
     public Artwork status(Status status) {
         this.setStatus(status);
         return this;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Set<Comment> getComments() {
-        return this.comments;
     }
 
     public void setComments(Set<Comment> comments) {
@@ -198,10 +139,6 @@ public class Artwork implements Serializable {
         this.comments.remove(comment);
         comment.setArtwork(null);
         return this;
-    }
-
-    public Set<View> getViews() {
-        return this.views;
     }
 
     public void setViews(Set<View> views) {
@@ -262,8 +199,6 @@ public class Artwork implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -277,22 +212,6 @@ public class Artwork implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "Artwork{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", shortDescription='" + getShortDescription() + "'" +
-            ", longDescription='" + getLongDescription() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
-            ", artistname='" + getArtistname() + "'" +
-            ", makingday='" + getMakingday() + "'" +
-            ", status='" + getStatus() + "'" +
-            "}";
     }
 }
