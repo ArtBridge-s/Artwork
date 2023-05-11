@@ -3,10 +3,12 @@ package com.artbridge.artwork.config;
 import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.spring.cache.HazelcastCacheManager;
 import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
@@ -47,7 +49,7 @@ public class CacheConfiguration {
     }
 
     @Autowired(required = false)
-    public void setRegistration(Registration registration) {
+    public void setRegistration(@Qualifier("eurekaRegistration") Registration registration) {
         this.registration = registration;
     }
 
@@ -58,9 +60,9 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public CacheManager cacheManager(HazelcastInstance hazelcastInstance) {
+    public CacheManager cacheManager(@Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
         log.debug("Starting HazelcastCacheManager");
-        return new com.hazelcast.spring.cache.HazelcastCacheManager(hazelcastInstance);
+        return new HazelcastCacheManager(hazelcastInstance);
     }
 
     @Bean
