@@ -61,7 +61,10 @@ public class ArtworkResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @ApiOperation(value = "작품 등록")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))), @ApiResponse(responseCode = "400", description = "Bad Request")})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
     @PostMapping("/artworks")
     public ResponseEntity<ArtworkDTO> createArtwork(@RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to save Artwork : {}", artworkDTO);
@@ -69,7 +72,10 @@ public class ArtworkResource {
             throw new BadRequestAlertException("A new artwork cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ArtworkDTO result = artworkService.save(artworkDTO);
-        return ResponseEntity.created(new URI("/api/artworks/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
+        return ResponseEntity
+            .created(new URI("/api/artworks/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**
@@ -83,7 +89,11 @@ public class ArtworkResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @ApiOperation(value = "작품 수정")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))), @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))), @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class)))})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class)))
+    })
     @PutMapping("/artworks/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
@@ -114,7 +124,12 @@ public class ArtworkResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @ApiOperation(value = "Partial updates given fields of an existing artwork")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))), @ApiResponse(responseCode = "400", description = "Bad Request"), @ApiResponse(responseCode = "404", description = "Not Found"), @ApiResponse(responseCode = "500", description = "Internal Server Error")})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "404", description = "Not Found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @PatchMapping(value = "/artworks/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ArtworkDTO> partialUpdateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to partial update Artwork partially : {}, {}", id, artworkDTO);
@@ -131,7 +146,10 @@ public class ArtworkResource {
 
         Optional<ArtworkDTO> result = artworkService.partialUpdate(artworkDTO);
 
-        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, artworkDTO.getId().toString()));
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, artworkDTO.getId().toString())
+        );
     }
 
     /**
@@ -141,7 +159,9 @@ public class ArtworkResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of artworks in body.
      */
     @ApiOperation(value = "Get all artworks")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArtworkDTO.class))))})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArtworkDTO.class))))
+    })
     @GetMapping("/artworks")
     public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
@@ -157,7 +177,10 @@ public class ArtworkResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the artworkDTO, or with status {@code 404 (Not Found)}.
      */
     @ApiOperation(value = "Get an artwork by ID")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))), @ApiResponse(responseCode = "404", description = "Not Found")})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
+        @ApiResponse(responseCode = "404", description = "Not Found")
+    })
     @GetMapping("/artworks/{id}")
     public ResponseEntity<ArtworkDTO> getArtwork(@PathVariable Long id) {
         log.debug("REST request to get Artwork : {}", id);
@@ -172,11 +195,17 @@ public class ArtworkResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @ApiOperation(value = "Delete an artwork by ID")
-    @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Successfully deleted"), @ApiResponse(responseCode = "404", description = "Not Found")})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Successfully deleted"),
+        @ApiResponse(responseCode = "404", description = "Not Found")
+    })
     @DeleteMapping("/artworks/{id}")
     public ResponseEntity<Void> deleteArtwork(@PathVariable Long id) {
         log.debug("REST request to delete Artwork : {}", id);
         artworkService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }
