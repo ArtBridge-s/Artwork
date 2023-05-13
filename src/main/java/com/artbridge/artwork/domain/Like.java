@@ -1,5 +1,6 @@
 package com.artbridge.artwork.domain;
 
+import com.artbridge.artwork.domain.valueobject.Member;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -31,8 +32,8 @@ public class Like implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "member")
-    private Long member;
+    @Embedded
+    private Member member;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "comments", "views", "likes" }, allowSetters = true)
@@ -43,7 +44,7 @@ public class Like implements Serializable {
         return this;
     }
 
-    public Like member(Long member) {
+    public Like member(Member member) {
         this.setMember(member);
         return this;
     }
@@ -66,7 +67,6 @@ public class Like implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 }
