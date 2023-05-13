@@ -8,4 +8,12 @@ import org.mapstruct.*;
  * Mapper for the entity {@link Artwork} and its DTO {@link ArtworkDTO}.
  */
 @Mapper(componentModel = "spring")
-public interface ArtworkMapper extends EntityMapper<ArtworkDTO, Artwork> {}
+public interface ArtworkMapper extends EntityMapper<ArtworkDTO, Artwork> {
+
+    @Mapping(target = "member", source = "member")
+    ArtworkDTO toDto(Artwork artwork);
+
+    @InheritInverseConfiguration
+    Artwork toEntity(ArtworkDTO artworkDTO);
+
+}

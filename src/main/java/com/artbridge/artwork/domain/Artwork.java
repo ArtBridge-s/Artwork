@@ -1,6 +1,7 @@
 package com.artbridge.artwork.domain;
 
 import com.artbridge.artwork.domain.enumeration.Status;
+import com.artbridge.artwork.domain.valueobject.Member;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -51,6 +52,9 @@ public class Artwork implements Serializable {
 
     @Column(name = "makingday")
     private String makingday;
+
+    @Embedded
+    private Member member;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
