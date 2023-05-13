@@ -11,9 +11,7 @@ import lombok.Data;
 public class ViewDTO implements Serializable {
 
     private Long id;
-
-    private Long member;
-
+    private MemberDTO member;
     private ArtworkDTO artwork;
 
 }
