@@ -34,7 +34,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.artbridge.artwork.domain.Artwork}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/artworks")
 public class ArtworkResource {
 
     private final Logger log = LoggerFactory.getLogger(ArtworkResource.class);
@@ -65,7 +65,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
         @ApiResponse(responseCode = "400", description = "Bad Request")
     })
-    @PostMapping("/artworks")
+    @PostMapping("")
     public ResponseEntity<ArtworkDTO> createArtwork(@RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to save Artwork : {}", artworkDTO);
         if (artworkDTO.getId() != null) {
@@ -93,7 +93,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class)))
     })
-    @PutMapping("/artworks/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
         if (artworkDTO.getId() == null) {
@@ -128,7 +128,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "404", description = "Not Found"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
-    @PatchMapping(value = "/artworks/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    @PatchMapping(value = "/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ArtworkDTO> partialUpdateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to partial update Artwork partially : {}, {}", id, artworkDTO);
         if (artworkDTO.getId() == null) {
@@ -160,7 +160,7 @@ public class ArtworkResource {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArtworkDTO.class))))
     })
-    @GetMapping("/artworks")
+    @GetMapping("")
     public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
         Page<ArtworkDTO> page = artworkService.findAll(pageable);
@@ -179,7 +179,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
         @ApiResponse(responseCode = "404", description = "Not Found")
     })
-    @GetMapping("/artworks/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ArtworkDTO> getArtwork(@PathVariable Long id) {
         log.debug("REST request to get Artwork : {}", id);
         Optional<ArtworkDTO> artworkDTO = artworkService.findOne(id);
@@ -197,7 +197,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "204", description = "Successfully deleted"),
         @ApiResponse(responseCode = "404", description = "Not Found")
     })
-    @DeleteMapping("/artworks/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArtwork(@PathVariable Long id) {
         log.debug("REST request to delete Artwork : {}", id);
         artworkService.delete(id);
