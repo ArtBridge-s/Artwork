@@ -1,8 +1,6 @@
 package com.artbridge.artwork.service.mapper;
 
-import com.artbridge.artwork.domain.Artwork;
 import com.artbridge.artwork.domain.Like;
-import com.artbridge.artwork.service.dto.ArtworkDTO;
 import com.artbridge.artwork.service.dto.LikeDTO;
 import org.mapstruct.*;
 
