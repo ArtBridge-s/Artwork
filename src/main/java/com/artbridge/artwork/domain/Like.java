@@ -11,9 +11,6 @@ import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-/**
- * A Like.
- */
 @Entity
 @Table(name = "jhi_like")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -33,6 +30,8 @@ public class Like implements Serializable {
     private Long id;
 
     @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "member_id"))
+    @AttributeOverride(name = "name", column = @Column(name = "member_name"))
     private Member member;
 
     @ManyToOne
