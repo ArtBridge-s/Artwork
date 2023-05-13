@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.artbridge.artwork.web.rest.errors.ExceptionTranslator;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -90,8 +91,8 @@ public class ArtworkResource {
     @ApiOperation(value = "작품 수정")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
-        @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = BadRequestAlertException.class)))
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @PutMapping("/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
