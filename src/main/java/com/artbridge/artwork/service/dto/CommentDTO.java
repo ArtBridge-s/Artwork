@@ -1,6 +1,7 @@
 package com.artbridge.artwork.service.dto;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -12,7 +13,7 @@ public class CommentDTO implements Serializable {
 
     private Long id;
 
-    private Long member;
+    private MemberDTO member;
 
     private String content;
 

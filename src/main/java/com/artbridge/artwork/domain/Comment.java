@@ -1,5 +1,6 @@
 package com.artbridge.artwork.domain;
 
+import com.artbridge.artwork.domain.valueobject.Member;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -31,8 +32,10 @@ public class Comment implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "member")
-    private Long member;
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "member_id"))
+    @AttributeOverride(name = "name", column = @Column(name = "member_name"))
+    private Member member;
 
     @Column(name = "content")
     private String content;
@@ -46,7 +49,7 @@ public class Comment implements Serializable {
         return this;
     }
 
-    public Comment member(Long member) {
+    public Comment member(Member member) {
         this.setMember(member);
         return this;
     }
