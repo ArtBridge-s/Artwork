@@ -14,7 +14,7 @@ public class LikeDTO implements Serializable {
 
     private Long id;
 
-    private Member member;
+    private MemberDTO member;
 
     private ArtworkDTO artwork;
 

@@ -11,11 +11,10 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface LikeMapper extends EntityMapper<LikeDTO, Like> {
-    @Mapping(target = "artwork", source = "artwork", qualifiedByName = "artworkId")
+    @Mapping(target = "artwork", source = "artwork")
+    @Mapping(target = "member", source = "member")
     LikeDTO toDto(Like s);
 
-    @Named("artworkId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    ArtworkDTO toDtoArtworkId(Artwork artwork);
+    @InheritInverseConfiguration
+    Like toEntity(LikeDTO likeDTO);
 }
