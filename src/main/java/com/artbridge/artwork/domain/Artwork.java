@@ -54,6 +54,8 @@ public class Artwork implements Serializable {
     private String makingday;
 
     @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "member_id"))
+    @AttributeOverride(name = "name", column = @Column(name = "member_name"))
     private Member member;
 
     @Enumerated(EnumType.STRING)
