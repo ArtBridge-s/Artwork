@@ -61,7 +61,7 @@ public class ArtworkResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new artworkDTO, or with status {@code 400 (Bad Request)} if the artwork has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @ApiOperation(value = "작품 등록")
+    @ApiOperation(value = "작품 업로드 요청")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
         @ApiResponse(responseCode = "400", description = "Bad Request")
