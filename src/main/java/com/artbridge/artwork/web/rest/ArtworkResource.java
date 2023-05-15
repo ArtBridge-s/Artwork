@@ -66,7 +66,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "201", description = "Successfully created", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
         @ApiResponse(responseCode = "400", description = "Bad Request")
     })
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<ArtworkDTO> createArtwork(@RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to save Artwork : {}", artworkDTO);
         if (artworkDTO.getId() != null) {
@@ -161,7 +161,7 @@ public class ArtworkResource {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArtworkDTO.class))))
     })
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
         Page<ArtworkDTO> page = artworkService.findAll(pageable);
