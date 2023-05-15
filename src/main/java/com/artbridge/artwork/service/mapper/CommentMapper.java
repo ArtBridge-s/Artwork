@@ -13,6 +13,7 @@ public interface CommentMapper extends EntityMapper<CommentDTO, Comment> {
     @Mapping(target = "member", source = "member")
     CommentDTO toDto(Comment s);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "artwork", source = "artwork")
+    @Mapping(target = "member", source = "member")
     Comment toEntity(CommentDTO commentDTO);
 }

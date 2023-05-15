@@ -13,6 +13,7 @@ public interface ViewMapper extends EntityMapper<ViewDTO, View> {
     @Mapping(target = "member", source = "member")
     ViewDTO toDto(View s);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "artwork", source = "artwork")
+    @Mapping(target = "member", source = "member")
     View toEntity(ViewDTO viewDTO);
 }

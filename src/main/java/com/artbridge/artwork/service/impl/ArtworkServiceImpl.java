@@ -1,6 +1,7 @@
 package com.artbridge.artwork.service.impl;
 
 import com.artbridge.artwork.domain.Artwork;
+import com.artbridge.artwork.domain.enumeration.Status;
 import com.artbridge.artwork.repository.ArtworkRepository;
 import com.artbridge.artwork.service.ArtworkService;
 import com.artbridge.artwork.service.dto.ArtworkDTO;
@@ -34,6 +35,9 @@ public class ArtworkServiceImpl implements ArtworkService {
     @Override
     public ArtworkDTO save(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
+
+        artworkDTO.setStatus(Status.UPLOAD_PENDING);
+        /*TODO: - Event memberDto name*/
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork = artworkRepository.save(artwork);
         return artworkMapper.toDto(artwork);

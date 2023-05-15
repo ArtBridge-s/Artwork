@@ -13,7 +13,7 @@ public interface ArtworkMapper extends EntityMapper<ArtworkDTO, Artwork> {
     @Mapping(target = "member", source = "member")
     ArtworkDTO toDto(Artwork artwork);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "member", source = "member")
     Artwork toEntity(ArtworkDTO artworkDTO);
 
 }

@@ -13,6 +13,7 @@ public interface LikeMapper extends EntityMapper<LikeDTO, Like> {
     @Mapping(target = "member", source = "member")
     LikeDTO toDto(Like s);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "artwork", source = "artwork")
+    @Mapping(target = "member", source = "member")
     Like toEntity(LikeDTO likeDTO);
 }
