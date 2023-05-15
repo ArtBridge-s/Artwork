@@ -21,7 +21,7 @@ import org.springframework.util.ObjectUtils;
 import tech.jhipster.config.JHipsterProperties;
 
 @Component
-public class TokenProvider {
+public class TokenProvider { /*TODO: -DIP*/
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
@@ -94,6 +94,16 @@ public class TokenProvider {
         User principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }
+
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+
+        return claims.get("userId", Long.class);
     }
 
     public boolean validateToken(String authToken) {
