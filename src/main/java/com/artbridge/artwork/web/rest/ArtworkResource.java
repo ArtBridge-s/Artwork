@@ -1,8 +1,11 @@
 package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.repository.ArtworkRepository;
+import com.artbridge.artwork.security.SecurityUtils;
+import com.artbridge.artwork.security.jwt.TokenProvider;
 import com.artbridge.artwork.service.ArtworkService;
 import com.artbridge.artwork.service.dto.ArtworkDTO;
+import com.artbridge.artwork.service.dto.MemberDTO;
 import com.artbridge.artwork.web.rest.errors.BadRequestAlertException;
 
 import java.net.URI;
@@ -11,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.artbridge.artwork.web.rest.errors.ExceptionTranslator;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +27,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -49,9 +52,12 @@ public class ArtworkResource {
 
     private final ArtworkRepository artworkRepository;
 
-    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository) {
+    private final TokenProvider tokenProvider;
+
+    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository, TokenProvider tokenProvider) {
         this.artworkService = artworkService;
         this.artworkRepository = artworkRepository;
+        this.tokenProvider = tokenProvider;
     }
 
     /**
@@ -69,9 +75,25 @@ public class ArtworkResource {
     @PostMapping
     public ResponseEntity<ArtworkDTO> createArtwork(@RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to save Artwork : {}", artworkDTO);
+        Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
+
         if (artworkDTO.getId() != null) {
             throw new BadRequestAlertException("A new artwork cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (optToken.isEmpty()) {
+            throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
+        }
+        String token = optToken.get();
+
+        if (!this.tokenProvider.validateToken(token)) {
+            throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
+        }
+        Authentication authentication = this.tokenProvider.getAuthentication(token);
+        Long userId = this.tokenProvider.getUserIdFromToken(token);
+
+        MemberDTO memberDTO = new MemberDTO(userId,  authentication.getName());
+        artworkDTO.setMember(memberDTO);
+
         ArtworkDTO result = artworkService.save(artworkDTO);
         return ResponseEntity
             .created(new URI("/api/artworks/" + result.getId()))
