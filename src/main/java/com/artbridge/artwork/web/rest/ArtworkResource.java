@@ -1,5 +1,6 @@
 package com.artbridge.artwork.web.rest;
 
+import com.artbridge.artwork.adaptor.GCSServiceimpl;
 import com.artbridge.artwork.repository.ArtworkRepository;
 import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.security.jwt.TokenProvider;
@@ -8,6 +9,7 @@ import com.artbridge.artwork.service.dto.ArtworkDTO;
 import com.artbridge.artwork.service.dto.MemberDTO;
 import com.artbridge.artwork.web.rest.errors.BadRequestAlertException;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -29,6 +31,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -54,10 +57,13 @@ public class ArtworkResource {
 
     private final TokenProvider tokenProvider;
 
-    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository, TokenProvider tokenProvider) {
+    private final GCSServiceimpl gcsServiceimpl;
+
+    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository, TokenProvider tokenProvider, GCSServiceimpl gcsServiceimpl) {
         this.artworkService = artworkService;
         this.artworkRepository = artworkRepository;
         this.tokenProvider = tokenProvider;
+        this.gcsServiceimpl = gcsServiceimpl;
     }
 
     /**
@@ -73,7 +79,7 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "400", description = "Bad Request")
     })
     @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
+    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
         log.debug("REST request to save Artwork : {}", artworkDTO);
         Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
 
@@ -94,12 +100,16 @@ public class ArtworkResource {
         MemberDTO memberDTO = new MemberDTO(userId,  authentication.getName());
         artworkDTO.setMember(memberDTO);
 
-        ArtworkDTO result = artworkService.save(artworkDTO);
+        this.uploadImage(file, artworkDTO);
+
+        ArtworkDTO result = this.artworkService.save(artworkDTO);
         return ResponseEntity
             .created(new URI("/api/artworks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+
 
     /**
      * {@code PUT  /artworks/:id} : Updates an existing artwork.
@@ -228,5 +238,24 @@ public class ArtworkResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+
+    /**
+     * 업로드된 이미지 파일을 처리하여 ArtworkDTO에 이미지 URL을 설정합니다.
+     *
+     * @param file       업로드된 이미지 파일
+     * @param artworkDTO ArtworkDTO 객체
+     * @throws BadRequestAlertException 파일 업로드 실패 시 발생하는 예외
+     */
+    private void uploadImage(MultipartFile file, ArtworkDTO artworkDTO) {
+        if (!Objects.isNull(file)) {
+            try {
+                String imageUrl = gcsServiceimpl.uploadFileToGCS(file);
+                artworkDTO.setImageUrl(imageUrl);
+            } catch (IOException e) {
+                throw new BadRequestAlertException("File upload failed", ENTITY_NAME, "filereadfailed");
+            }
+        }
     }
 }
