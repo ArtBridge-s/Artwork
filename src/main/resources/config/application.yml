@@ -234,7 +234,7 @@ jhipster:
     name: 'artworkApp'
   # By default CORS is disabled. Uncomment to enable.
   cors:
-    allowed-origins: "*"
+    allowed-origins:
     allowed-origin-patterns: "*"
     allowed-methods: "*"
     allowed-headers: "*"
