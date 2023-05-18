@@ -131,7 +131,7 @@ jhipster:
     password: admin
   cors:
     allowed-origins: "*"
-    allowed-origin-patterns: "*"
+    allowed-origin-patterns: "https?://localhost(:[0-9]+)?"
     allowed-methods: "*"
     allowed-headers: "*"
     exposed-headers: "*"
