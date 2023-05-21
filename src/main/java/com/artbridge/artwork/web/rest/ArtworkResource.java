@@ -82,28 +82,13 @@ public class ArtworkResource {
     })
     @PostMapping
     public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, JsonProcessingException {
-        // Convert artworkDTOStr to ArtworkDTO
-        ObjectMapper mapper = new ObjectMapper();
-        ArtworkDTO artworkDTO = mapper.readValue(artworkDTOStr, ArtworkDTO.class);
+        ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
 
         log.debug("REST request to save Artwork : {}", artworkDTO);
-        Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
 
-        if (artworkDTO.getId() != null) {
-            throw new BadRequestAlertException("A new artwork cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        if (optToken.isEmpty()) {
-            throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
-        }
-        String token = optToken.get();
+        String token = this.validateAndGetToken();
 
-        if (!this.tokenProvider.validateToken(token)) {
-            throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
-        }
-        Authentication authentication = this.tokenProvider.getAuthentication(token);
-        Long userId = this.tokenProvider.getUserIdFromToken(token);
-
-        MemberDTO memberDTO = new MemberDTO(userId,  authentication.getName());
+        MemberDTO memberDTO = this.createMember(token);
         artworkDTO.setMember(memberDTO);
 
         this.uploadImage(file, artworkDTO);
@@ -264,5 +249,24 @@ public class ArtworkResource {
                 throw new BadRequestAlertException("File upload failed", ENTITY_NAME, "filereadfailed");
             }
         }
+    }
+
+    private ArtworkDTO convertToDTO(String artworkDTOStr) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
+    }
+
+    private String validateAndGetToken() {
+        Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
+        if (optToken.isEmpty() || !this.tokenProvider.validateToken(optToken.get())) {
+            throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
+        }
+        return optToken.get();
+    }
+
+    private MemberDTO createMember(String token) {
+        Authentication authentication = this.tokenProvider.getAuthentication(token);
+        Long userId = this.tokenProvider.getUserIdFromToken(token);
+        return new MemberDTO(userId,  authentication.getName());
     }
 }
