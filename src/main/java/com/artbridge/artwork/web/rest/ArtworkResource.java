@@ -264,6 +264,12 @@ public class ArtworkResource {
         return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
     }
 
+    /**
+     * 현재 사용자로부터 얻은 JWT 토큰을 유효성 검사하고 유효한 토큰을 반환합니다.
+     *
+     * @return 유효한 JWT 토큰
+     * @throws BadRequestAlertException JWT 토큰이 잘못되었거나 존재하지 않는 경우
+     */
     private String validateAndGetToken() {
         Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
         if (optToken.isEmpty() || !this.tokenProvider.validateToken(optToken.get())) {
