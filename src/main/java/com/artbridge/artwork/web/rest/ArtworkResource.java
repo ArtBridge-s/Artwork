@@ -272,6 +272,12 @@ public class ArtworkResource {
         return optToken.get();
     }
 
+    /**
+     * 주어진 토큰을 사용하여 MemberDTO 객체를 생성합니다.
+     *
+     * @param token JWT 토큰
+     * @return MemberDTO 객체
+     */
     private MemberDTO createMember(String token) {
         Authentication authentication = this.tokenProvider.getAuthentication(token);
         Long userId = this.tokenProvider.getUserIdFromToken(token);
