@@ -251,6 +251,14 @@ public class ArtworkResource {
         }
     }
 
+
+    /**
+     * ArtworkDTO를 JSON 문자열 표현에서 실제 ArtworkDTO 객체로 변환합니다.
+     *
+     * @param artworkDTOStr ArtworkDTO의 JSON 문자열 표현
+     * @return ArtworkDTO 객체
+     * @throws JsonProcessingException JSON 처리 중 오류가 발생한 경우
+     */
     private ArtworkDTO convertToDTO(String artworkDTOStr) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
