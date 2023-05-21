@@ -1,7 +1,6 @@
 package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.adaptor.GCSService;
-import com.artbridge.artwork.adaptor.GCSServiceimpl;
 import com.artbridge.artwork.repository.ArtworkRepository;
 import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.security.jwt.TokenProvider;
@@ -17,6 +16,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -80,7 +81,11 @@ public class ArtworkResource {
         @ApiResponse(responseCode = "400", description = "Bad Request")
     })
     @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestBody ArtworkDTO artworkDTO) throws URISyntaxException {
+    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, JsonProcessingException {
+        // Convert artworkDTOStr to ArtworkDTO
+        ObjectMapper mapper = new ObjectMapper();
+        ArtworkDTO artworkDTO = mapper.readValue(artworkDTOStr, ArtworkDTO.class);
+
         log.debug("REST request to save Artwork : {}", artworkDTO);
         Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
 
@@ -250,9 +255,10 @@ public class ArtworkResource {
      * @throws BadRequestAlertException 파일 업로드 실패 시 발생하는 예외
      */
     private void uploadImage(MultipartFile file, ArtworkDTO artworkDTO) {
+        log.debug("REST request to upload image file : {}", file);
         if (!Objects.isNull(file)) {
             try {
-                String imageUrl = gcsService.uploadFileToGCS(file);
+                String imageUrl = gcsService.uploadImageToGCS(file);
                 artworkDTO.setImageUrl(imageUrl);
             } catch (IOException e) {
                 throw new BadRequestAlertException("File upload failed", ENTITY_NAME, "filereadfailed");
