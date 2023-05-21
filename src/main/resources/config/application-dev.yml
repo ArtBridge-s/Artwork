@@ -15,14 +15,14 @@
 
 logging:
   level:
-    ROOT: WARN
-    tech.jhipster: WARN
+    ROOT: INFO
+    tech.jhipster: INFO
     org.hibernate.SQL: INFO
     com.artbridge.artwork: INFO
     c.h.internal.diagnostics.HealthMonitor: OFF
     org.apache.kafka.clients: OFF
-    com.hazelcast: WARN
-    com.netflix: WARN
+    com.hazelcast: INFO
+    com.netflix: INFO
 
 eureka:
   instance:
@@ -42,6 +42,12 @@ spring:
     serialization:
       indent-output: true
   cloud:
+    gcp:
+      project-id: artbridge
+      storage:
+        credentials:
+          location: classpath:config/artbridge-234c412b01cf.json
+        bucket: artbridge-bucket
     config:
       uri: http://admin:${jhipster.registry.password}@localhost:8761/config
       # name of the config server's property source (file.yml) that we want to use
