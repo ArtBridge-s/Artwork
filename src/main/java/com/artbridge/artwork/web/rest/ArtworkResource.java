@@ -1,5 +1,6 @@
 package com.artbridge.artwork.web.rest;
 
+import com.artbridge.artwork.adaptor.GCSService;
 import com.artbridge.artwork.adaptor.GCSServiceimpl;
 import com.artbridge.artwork.repository.ArtworkRepository;
 import com.artbridge.artwork.security.SecurityUtils;
@@ -57,13 +58,13 @@ public class ArtworkResource {
 
     private final TokenProvider tokenProvider;
 
-    private final GCSServiceimpl gcsServiceimpl;
+    private final GCSService gcsService;
 
-    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository, TokenProvider tokenProvider, GCSServiceimpl gcsServiceimpl) {
+    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository, TokenProvider tokenProvider, GCSService gcsService) {
         this.artworkService = artworkService;
         this.artworkRepository = artworkRepository;
         this.tokenProvider = tokenProvider;
-        this.gcsServiceimpl = gcsServiceimpl;
+        this.gcsService = gcsService;
     }
 
     /**
@@ -251,7 +252,7 @@ public class ArtworkResource {
     private void uploadImage(MultipartFile file, ArtworkDTO artworkDTO) {
         if (!Objects.isNull(file)) {
             try {
-                String imageUrl = gcsServiceimpl.uploadFileToGCS(file);
+                String imageUrl = gcsService.uploadFileToGCS(file);
                 artworkDTO.setImageUrl(imageUrl);
             } catch (IOException e) {
                 throw new BadRequestAlertException("File upload failed", ENTITY_NAME, "filereadfailed");
