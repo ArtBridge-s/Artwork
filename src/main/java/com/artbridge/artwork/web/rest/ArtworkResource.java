@@ -113,12 +113,6 @@ public class ArtworkResource {
      * or with status {@code 400 (Bad Request)} if the artworkDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the artworkDTO couldn't be updated.
      */
-    @ApiOperation(value = "작품 수정")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
-        @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error")
-    })
     @PutMapping("/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
