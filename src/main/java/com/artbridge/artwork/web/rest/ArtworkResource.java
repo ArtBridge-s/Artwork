@@ -115,13 +115,13 @@ public class ArtworkResource {
 
 
     /**
-     * GET /pendingList : 이 엔드포인트는 보류 중인 Artwork의 페이지된 목록을 검색합니다.
+     * GET /pendingList/Create : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
      *
      * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
      * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
      * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
      */
-    @GetMapping("/pendingList")
+    @GetMapping("/pendingList/Create")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<ArtworkDTO>> getPendingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
