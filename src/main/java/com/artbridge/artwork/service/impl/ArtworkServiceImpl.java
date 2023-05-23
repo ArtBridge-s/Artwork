@@ -91,4 +91,13 @@ public class ArtworkServiceImpl implements ArtworkService {
         log.debug("Request to get all Artworks");
         return artworkRepository.findAllByStatus(Status.UPLOAD_PENDING, pageable).map(artworkMapper::toDto);
     }
+
+    @Override
+    public ArtworkDTO deletePending(ArtworkDTO artworkDTO) {
+        log.debug("Request to delete Artwork : {}", artworkDTO);
+        Artwork artwork = artworkMapper.toEntity(artworkDTO);
+        artwork.setStatus(Status.DELETE_PENDING);
+        artwork = artworkRepository.save(artwork);
+        return artworkMapper.toDto(artwork);
+    }
 }
