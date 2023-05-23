@@ -85,4 +85,10 @@ public class ArtworkServiceImpl implements ArtworkService {
         log.debug("Request to delete Artwork : {}", id);
         artworkRepository.deleteById(id);
     }
+
+    @Override
+    public Page<ArtworkDTO> findPendingList(Pageable pageable) {
+        log.debug("Request to get all Artworks");
+        return artworkRepository.findAllByStatus(Status.UPLOAD_PENDING, pageable).map(artworkMapper::toDto);
+    }
 }
