@@ -19,4 +19,6 @@ public interface ArtworkRepository extends JpaRepository<Artwork, Long> {
 
     Page<Artwork> findAllByStatus(Status status, Pageable pageable);
 
+    Optional<Artwork> findByIdAndStatus(Long id, Status status);
+
 }
