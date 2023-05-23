@@ -105,13 +105,13 @@ public class ArtworkResource {
 
 
     /**
-     * {@code PUT  /artworks/:id} : Updates an existing artwork.
+     * PUT /{id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트합니다.
      *
-     * @param id         the id of the artworkDTO to save.
-     * @param artworkDTO the artworkDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated artworkDTO,
-     * or with status {@code 400 (Bad Request)} if the artworkDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the artworkDTO couldn't be updated.
+     * @param id Artwork의 식별자
+     * @param artworkDTO 업데이트할 ArtworkDTO 객체
+     * @return 상태 코드 200 (OK)와 업데이트된 ArtworkDTO를 가진 ResponseEntity
+     * @throws BadRequestAlertException id가 잘못된 경우 (null이거나 잘못된 형식)
+     * @throws BadRequestAlertException 업데이트할 Artwork가 존재하지 않는 경우
      */
     @PutMapping("/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
