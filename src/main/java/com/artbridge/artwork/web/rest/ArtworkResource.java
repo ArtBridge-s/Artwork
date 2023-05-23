@@ -65,6 +65,7 @@ public class ArtworkResource {
         this.gcsService = gcsService;
     }
 
+
     /**
      * Artwork를 생성합니다.
      * MultipartFile은 업로드된 이미지 파일을 의미하며, ArtworkDTO는 Artwork의 정보를 포함하는 문자열입니다.
@@ -98,6 +99,55 @@ public class ArtworkResource {
 
 
     /**
+     * 모든 Artwork를 페이지별로 조회합니다.
+     *
+     * @param pageable 페이지 정보 (Pageable)
+     * @return 페이지별로 조회된 Artwork 목록을 담은 ResponseEntity
+     */
+    @GetMapping
+    public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Artworks");
+        Page<ArtworkDTO> page = artworkService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+
+    /**
+     * GET /pendingList : 이 엔드포인트는 보류 중인 Artwork의 페이지된 목록을 검색합니다.
+     *
+     * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
+     * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
+     * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
+     */
+    @GetMapping("/pendingList")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<ArtworkDTO>> getPendingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Artworks");
+        Page<ArtworkDTO> page = artworkService.findPendingList(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+
+    /**
+     * 주어진 id에 해당하는 Artwork를 조회합니다.
+     *
+     * @param id 조회할 Artwork의 식별자(ID)
+     * @return 주어진 id에 해당하는 Artwork의 정보를 담은 ResponseEntity
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<ArtworkDTO> getArtwork(@PathVariable Long id) {
+        log.debug("REST request to get Artwork : {}", id);
+        Optional<ArtworkDTO> artworkDTO = artworkService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(artworkDTO);
+    }
+
+
+
+    /**
      * PUT /{id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트 요청합니다.
      *
      * @param id Artwork의 식별자
@@ -118,6 +168,8 @@ public class ArtworkResource {
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, artworkDTO.getId().toString())).body(result);
     }
+
+
 
     /**
      * {@code PATCH  /artworks/:id} : Partial updates given fields of an existing artwork, field will ignore if it is null
@@ -144,48 +196,7 @@ public class ArtworkResource {
         );
     }
 
-    /**
-     * 모든 Artwork를 페이지별로 조회합니다.
-     *
-     * @param pageable 페이지 정보 (Pageable)
-     * @return 페이지별로 조회된 Artwork 목록을 담은 ResponseEntity
-     */
-    @GetMapping
-    public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
 
-    /**
-     * GET /pendingList : 이 엔드포인트는 보류 중인 Artwork의 페이지된 목록을 검색합니다.
-     *
-     * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
-     * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
-     * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
-     */
-    @GetMapping("/pendingList")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<ArtworkDTO>> getPendingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findPendingList(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * 주어진 id에 해당하는 Artwork를 조회합니다.
-     *
-     * @param id 조회할 Artwork의 식별자(ID)
-     * @return 주어진 id에 해당하는 Artwork의 정보를 담은 ResponseEntity
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<ArtworkDTO> getArtwork(@PathVariable Long id) {
-        log.debug("REST request to get Artwork : {}", id);
-        Optional<ArtworkDTO> artworkDTO = artworkService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(artworkDTO);
-    }
 
     /**
      * {@code DELETE  /artworks/:id} : delete the "id" artwork.
@@ -202,6 +213,10 @@ public class ArtworkResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+
+
+
 
 
     /**
