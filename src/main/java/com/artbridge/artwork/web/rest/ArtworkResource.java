@@ -117,24 +117,13 @@ public class ArtworkResource {
     @PutMapping("/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
-        if (artworkDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, artworkDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        Artwork artwork = artworkRepository.findById(id)
-            .orElseThrow(() -> new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
-
-        String token = this.validateAndGetToken();
-        MemberDTO memberDTO = this.createMember(token);
-
-        if (!artwork.getMember().getId().equals(memberDTO.getId())) {
-            throw new BadRequestAlertException("You are not the owner of this artwork", ENTITY_NAME, "notowner");
-        }
+        validateId(id, artworkDTO);
+        Artwork artwork = validateArtworkExists(id);
+        validateOwnership(artwork);
 
         ArtworkDTO result = artworkService.update(artworkDTO);
+
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, artworkDTO.getId().toString())).body(result);
     }
 
@@ -283,6 +272,34 @@ public class ArtworkResource {
         return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
     }
 
+
+
+    /**
+     * 주어진 토큰을 사용하여 MemberDTO 객체를 생성합니다.
+     *
+     * @param token JWT 토큰
+     * @return MemberDTO 객체
+     */
+    private MemberDTO createMember(String token) {
+        Authentication authentication = this.tokenProvider.getAuthentication(token);
+        Long userId = this.tokenProvider.getUserIdFromToken(token);
+        return new MemberDTO(userId,  authentication.getName());
+    }
+
+    private void validateId(Long id, ArtworkDTO artworkDTO) {
+        if (artworkDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, artworkDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+    }
+
+    private Artwork validateArtworkExists(Long id) {
+        return artworkRepository.findById(id)
+            .orElseThrow(() -> new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
+    }
+
     /**
      * 현재 사용자로부터 얻은 JWT 토큰을 유효성 검사하고 유효한 토큰을 반환합니다.
      *
@@ -297,15 +314,12 @@ public class ArtworkResource {
         return optToken.get();
     }
 
-    /**
-     * 주어진 토큰을 사용하여 MemberDTO 객체를 생성합니다.
-     *
-     * @param token JWT 토큰
-     * @return MemberDTO 객체
-     */
-    private MemberDTO createMember(String token) {
-        Authentication authentication = this.tokenProvider.getAuthentication(token);
-        Long userId = this.tokenProvider.getUserIdFromToken(token);
-        return new MemberDTO(userId,  authentication.getName());
+    private void validateOwnership(Artwork artwork) {
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+
+        if (!artwork.getMember().getId().equals(memberDTO.getId())) {
+            throw new BadRequestAlertException("You are not the owner of this artwork", ENTITY_NAME, "notowner");
+        }
     }
 }
