@@ -12,8 +12,6 @@ import com.artbridge.artwork.service.dto.MemberDTO;
 import com.artbridge.artwork.web.rest.errors.BadRequestAlertException;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -67,38 +65,6 @@ public class ArtworkResource {
 
 
     /**
-     * Artwork를 생성합니다.
-     * MultipartFile은 업로드된 이미지 파일을 의미하며, ArtworkDTO는 Artwork의 정보를 포함하는 문자열입니다.
-     *
-     * @param file           업로드된 이미지 파일 (MultipartFile)
-     * @param artworkDTOStr  Artwork의 정보를 포함하는 문자열 (JSON 형식의 String)
-     * @return 생성된 Artwork의 정보를 담은 ResponseEntity
-     * @throws URISyntaxException        URI 구문이 잘못되었을 경우 발생하는 예외
-     * @throws JsonProcessingException   ArtworkDTO 문자열을 파싱하는 도중 발생하는 예외
-     */
-    @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, JsonProcessingException {
-        ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
-
-        log.debug("REST request to save Artwork : {}", artworkDTO);
-
-        String token = this.validateAndGetToken();
-
-        MemberDTO memberDTO = this.createMember(token);
-        artworkDTO.setMember(memberDTO);
-
-        this.uploadImage(file, artworkDTO);
-
-        ArtworkDTO result = this.artworkService.save(artworkDTO);
-        return ResponseEntity
-            .created(new URI("/api/artworks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-
-
-    /**
      * 모든 Artwork를 페이지별로 조회합니다.
      *
      * @param pageable 페이지 정보 (Pageable)
@@ -147,28 +113,6 @@ public class ArtworkResource {
 
 
 
-    /**
-     * PUT /{id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트 요청합니다.
-     *
-     * @param id Artwork의 식별자
-     * @param artworkDTO 업데이트할 ArtworkDTO 객체
-     * @return 상태 코드 200 (OK)와 업데이트된 ArtworkDTO를 가진 ResponseEntity
-     * @throws BadRequestAlertException id가 잘못된 경우 (null이거나 잘못된 형식)
-     * @throws BadRequestAlertException 업데이트할 Artwork가 존재하지 않는 경우
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
-        log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
-
-        this.validateId(id, artworkDTO);
-        Artwork artwork = this.validateArtworkExists(id);
-        this.validateOwnership(artwork);
-
-        ArtworkDTO result = artworkService.update(artworkDTO);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, artworkDTO.getId().toString())).body(result);
-    }
-
 
 
     /**
@@ -196,23 +140,7 @@ public class ArtworkResource {
         );
     }
 
-    /**
-     * {@code PATCH /artworks/{id}/deletePending} : "id"에 해당하는 Artwork를 삭제 대기 상태로 변경합니다.
-     *
-     * @param id          삭제 대기 상태로 변경할 Artwork의 식별자(ID)
-     * @param artworkDTO  업데이트할 Artwork의 정보를 담은 ArtworkDTO 객체
-     * @return 업데이트된 Artwork의 정보를 담은 ResponseEntity
-     */
-    @PatchMapping(value = "/{id}/deletePending")
-    public ResponseEntity<ArtworkDTO> deletePendingArtwork(@PathVariable(value = "id") Long id, @RequestBody ArtworkDTO artworkDTO) {
-        log.debug("REST request to delete pending Artwork : {}", id);
-        this.validateId(id, artworkDTO);
-        this.validateArtworkExists(id);
 
-        ArtworkDTO result = artworkService.deletePending(artworkDTO);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
-    }
 
 
 
@@ -236,38 +164,6 @@ public class ArtworkResource {
 
 
 
-
-    /**
-     * 업로드된 이미지 파일을 처리하여 ArtworkDTO에 이미지 URL을 설정합니다.
-     *
-     * @param file       업로드된 이미지 파일
-     * @param artworkDTO ArtworkDTO 객체
-     * @throws BadRequestAlertException 파일 업로드 실패 시 발생하는 예외
-     */
-    private void uploadImage(MultipartFile file, ArtworkDTO artworkDTO) {
-        log.debug("REST request to upload image file : {}", file);
-        if (!Objects.isNull(file)) {
-            try {
-                String imageUrl = gcsService.uploadImageToGCS(file);
-                artworkDTO.setImageUrl(imageUrl);
-            } catch (IOException e) {
-                throw new BadRequestAlertException("File upload failed", ENTITY_NAME, "filereadfailed");
-            }
-        }
-    }
-
-
-    /**
-     * ArtworkDTO를 JSON 문자열 표현에서 실제 ArtworkDTO 객체로 변환합니다.
-     *
-     * @param artworkDTOStr ArtworkDTO의 JSON 문자열 표현
-     * @return ArtworkDTO 객체
-     * @throws JsonProcessingException JSON 처리 중 오류가 발생한 경우
-     */
-    private ArtworkDTO convertToDTO(String artworkDTOStr) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
-    }
 
 
 
