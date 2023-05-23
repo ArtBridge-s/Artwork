@@ -1,6 +1,7 @@
 package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.adaptor.GCSService;
+import com.artbridge.artwork.domain.Artwork;
 import com.artbridge.artwork.repository.ArtworkRepository;
 import com.artbridge.artwork.security.AuthoritiesConstants;
 import com.artbridge.artwork.security.SecurityUtils;
@@ -105,7 +106,7 @@ public class ArtworkResource {
 
 
     /**
-     * PUT /{id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트합니다.
+     * PUT /{id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트 요청합니다.
      *
      * @param id Artwork의 식별자
      * @param artworkDTO 업데이트할 ArtworkDTO 객체
@@ -123,8 +124,14 @@ public class ArtworkResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!artworkRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        Artwork artwork = artworkRepository.findById(id)
+            .orElseThrow(() -> new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
+
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+
+        if (!artwork.getMember().getId().equals(memberDTO.getId())) {
+            throw new BadRequestAlertException("You are not the owner of this artwork", ENTITY_NAME, "notowner");
         }
 
         ArtworkDTO result = artworkService.update(artworkDTO);
