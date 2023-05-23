@@ -199,10 +199,13 @@ public class ArtworkResource {
 
 
     /**
-     * {@code DELETE  /artworks/:id} : delete the "id" artwork.
+     * {@code DELETE  /artworks/:id} : "id"에 해당하는 Artwork를 삭제합니다.
+     * Artwork 삭제는 관리자 권한인 경우 즉시 삭제되며, 일반 사용자인 경우 삭제 대기 상태로 변경됩니다.
+     * Artwork가 삭제되거나 삭제 대기 상태로 변경되면 업데이트된 Artwork의 정보를 담은 ResponseEntity를 반환합니다.
      *
-     * @param id the id of the artworkDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     * @param id          삭제할 Artwork의 식별자(ID)
+     * @param artworkDTO  업데이트할 Artwork의 정보를 담은 ArtworkDTO 객체
+     * @return 업데이트된 Artwork의 정보를 담은 ResponseEntity
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<ArtworkDTO> deleteArtwork(@PathVariable Long id, @RequestBody ArtworkDTO artworkDTO) {
