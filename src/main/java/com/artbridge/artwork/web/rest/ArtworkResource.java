@@ -112,9 +112,9 @@ public class ArtworkResource {
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
 
-        validateId(id, artworkDTO);
-        Artwork artwork = validateArtworkExists(id);
-        validateOwnership(artwork);
+        this.validateId(id, artworkDTO);
+        Artwork artwork = this.validateArtworkExists(id);
+        this.validateOwnership(artwork);
 
         ArtworkDTO result = artworkService.update(artworkDTO);
 
@@ -134,9 +134,9 @@ public class ArtworkResource {
     @PatchMapping(value = "/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ArtworkDTO> partialUpdateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to partial update Artwork partially : {}, {}", id, artworkDTO);
-        validateId(id, artworkDTO);
-        Artwork artwork = validateArtworkExists(id);
-        validateOwnership(artwork);
+        this.validateId(id, artworkDTO);
+        Artwork artwork = this.validateArtworkExists(id);
+        this.validateOwnership(artwork);
 
         Optional<ArtworkDTO> result = artworkService.partialUpdate(artworkDTO);
 
