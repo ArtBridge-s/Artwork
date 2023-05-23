@@ -175,10 +175,10 @@ public class ArtworkResource {
     }
 
     /**
-     * {@code GET  /artworks/:id} : get the "id" artwork.
+     * 주어진 id에 해당하는 Artwork를 조회합니다.
      *
-     * @param id the id of the artworkDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the artworkDTO, or with status {@code 404 (Not Found)}.
+     * @param id 조회할 Artwork의 식별자(ID)
+     * @return 주어진 id에 해당하는 Artwork의 정보를 담은 ResponseEntity
      */
     @GetMapping("/{id}")
     public ResponseEntity<ArtworkDTO> getArtwork(@PathVariable Long id) {
