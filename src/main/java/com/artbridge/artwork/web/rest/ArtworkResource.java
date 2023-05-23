@@ -132,13 +132,6 @@ public class ArtworkResource {
      * or with status {@code 404 (Not Found)} if the artworkDTO is not found,
      * or with status {@code 500 (Internal Server Error)} if the artworkDTO couldn't be updated.
      */
-    @ApiOperation(value = "Partial updates given fields of an existing artwork")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully updated", content = @Content(schema = @Schema(implementation = ArtworkDTO.class))),
-        @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "404", description = "Not Found"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error")
-    })
     @PatchMapping(value = "/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ArtworkDTO> partialUpdateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to partial update Artwork partially : {}, {}", id, artworkDTO);
