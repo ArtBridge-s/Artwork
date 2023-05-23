@@ -196,24 +196,6 @@ public class ArtworkResource {
         );
     }
 
-    /**
-     * {@code PATCH /artworks/{id}/deletePending} : "id"에 해당하는 Artwork를 삭제 대기 상태로 변경합니다.
-     *
-     * @param id          삭제 대기 상태로 변경할 Artwork의 식별자(ID)
-     * @param artworkDTO  업데이트할 Artwork의 정보를 담은 ArtworkDTO 객체
-     * @return 업데이트된 Artwork의 정보를 담은 ResponseEntity
-     */
-    @PatchMapping(value = "/{id}/deletePending")
-    public ResponseEntity<ArtworkDTO> deletePendingArtwork(@PathVariable(value = "id") Long id, @RequestBody ArtworkDTO artworkDTO) {
-        log.debug("REST request to delete pending Artwork : {}", id);
-        this.validateId(id, artworkDTO);
-        this.validateArtworkExists(id);
-
-        ArtworkDTO result = artworkService.deletePending(artworkDTO);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
-    }
-
 
 
     /**
