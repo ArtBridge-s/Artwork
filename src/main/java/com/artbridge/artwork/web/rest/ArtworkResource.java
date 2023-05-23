@@ -147,16 +147,9 @@ public class ArtworkResource {
     @PatchMapping(value = "/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ArtworkDTO> partialUpdateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to partial update Artwork partially : {}, {}", id, artworkDTO);
-        if (artworkDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, artworkDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!artworkRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
+        validateId(id, artworkDTO);
+        Artwork artwork = validateArtworkExists(id);
+        validateOwnership(artwork);
 
         Optional<ArtworkDTO> result = artworkService.partialUpdate(artworkDTO);
 
