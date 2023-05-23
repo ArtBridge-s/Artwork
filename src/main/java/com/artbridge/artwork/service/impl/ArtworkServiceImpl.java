@@ -77,7 +77,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     @Transactional(readOnly = true)
     public Optional<ArtworkDTO> findOne(Long id) {
         log.debug("Request to get Artwork : {}", id);
-        return artworkRepository.findById(id).map(artworkMapper::toDto);
+        return artworkRepository.findByIdAndStatus(id, Status.OK).map(artworkMapper::toDto);
     }
 
     @Override
