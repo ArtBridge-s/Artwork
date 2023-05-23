@@ -197,6 +197,18 @@ public class ArtworkResource {
     }
 
 
+    @PatchMapping(value = "/{id}/deletePending")
+    public ResponseEntity<ArtworkDTO> deletePendingArtwork(@PathVariable(value = "id") Long id, @RequestBody ArtworkDTO artworkDTO) {
+        log.debug("REST request to delete pending Artwork : {}", id);
+        this.validateId(id, artworkDTO);
+        this.validateArtworkExists(id);
+
+        ArtworkDTO result = artworkService.deletePending(artworkDTO);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
+    }
+
+
 
     /**
      * {@code DELETE  /artworks/:id} : delete the "id" artwork.
