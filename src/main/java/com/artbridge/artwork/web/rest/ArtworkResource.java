@@ -201,7 +201,6 @@ public class ArtworkResource {
     /**
      * {@code DELETE  /artworks/:id} : "id"에 해당하는 Artwork를 삭제합니다.
      * Artwork 삭제는 관리자 권한인 경우 즉시 삭제되며, 일반 사용자인 경우 삭제 대기 상태로 변경됩니다.
-     * Artwork가 삭제되거나 삭제 대기 상태로 변경되면 업데이트된 Artwork의 정보를 담은 ResponseEntity를 반환합니다.
      *
      * @param id          삭제할 Artwork의 식별자(ID)
      * @param artworkDTO  업데이트할 Artwork의 정보를 담은 ArtworkDTO 객체
