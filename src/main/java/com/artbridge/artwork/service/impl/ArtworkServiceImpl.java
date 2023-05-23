@@ -46,6 +46,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     public ArtworkDTO update(ArtworkDTO artworkDTO) {
         log.debug("Request to update Artwork : {}", artworkDTO);
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
+        artwork.setStatus(Status.REVISION_PENDING);
         artwork = artworkRepository.save(artwork);
         return artworkMapper.toDto(artwork);
     }
