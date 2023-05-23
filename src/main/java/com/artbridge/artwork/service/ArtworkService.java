@@ -56,5 +56,12 @@ public interface ArtworkService {
      */
     void delete(Long id);
 
+    /**
+     * 이 메소드는 보류 중인 Artwork의 페이지를 검색합니다.
+     *
+     * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
+     * @return ArtworkDTO의 페이지 객체
+     * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
+     */
     Page<ArtworkDTO> findPendingList(Pageable pageable);
 }
