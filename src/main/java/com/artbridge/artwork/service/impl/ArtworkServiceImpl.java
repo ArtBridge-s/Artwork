@@ -70,7 +70,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     @Transactional(readOnly = true)
     public Page<ArtworkDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Artworks");
-        return artworkRepository.findAll(pageable).map(artworkMapper::toDto);
+        return artworkRepository.findAllByStatus(Status.OK, pageable).map(artworkMapper::toDto);
     }
 
     @Override
