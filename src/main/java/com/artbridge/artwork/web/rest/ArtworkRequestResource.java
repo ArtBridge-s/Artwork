@@ -116,7 +116,7 @@ public class ArtworkRequestResource {
      * @param artworkDTO  업데이트할 Artwork의 정보를 담은 ArtworkDTO 객체
      * @return 업데이트된 Artwork의 정보를 담은 ResponseEntity
      */
-    @PatchMapping(value = "/{id}/deletePending")
+    @PatchMapping(value = "/{id}")
     public ResponseEntity<ArtworkDTO> deletePendingArtwork(@PathVariable(value = "id") Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to delete pending Artwork : {}", id);
         this.validateId(id, artworkDTO);
