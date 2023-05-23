@@ -145,10 +145,10 @@ public class ArtworkResource {
     }
 
     /**
-     * {@code GET  /artworks} : get all the artworks.
+     * 모든 Artwork를 페이지별로 조회합니다.
      *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of artworks in body.
+     * @param pageable 페이지 정보 (Pageable)
+     * @return 페이지별로 조회된 Artwork 목록을 담은 ResponseEntity
      */
     @GetMapping
     public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
