@@ -66,11 +66,14 @@ public class ArtworkResource {
     }
 
     /**
-     * {@code POST  /artworks} : Create a new artwork.
+     * Artwork를 생성합니다.
+     * MultipartFile은 업로드된 이미지 파일을 의미하며, ArtworkDTO는 Artwork의 정보를 포함하는 문자열입니다.
      *
-     * @param artworkDTO the artworkDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new artworkDTO, or with status {@code 400 (Bad Request)} if the artwork has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @param file           업로드된 이미지 파일 (MultipartFile)
+     * @param artworkDTOStr  Artwork의 정보를 포함하는 문자열 (JSON 형식의 String)
+     * @return 생성된 Artwork의 정보를 담은 ResponseEntity
+     * @throws URISyntaxException        URI 구문이 잘못되었을 경우 발생하는 예외
+     * @throws JsonProcessingException   ArtworkDTO 문자열을 파싱하는 도중 발생하는 예외
      */
     @PostMapping
     public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, JsonProcessingException {
