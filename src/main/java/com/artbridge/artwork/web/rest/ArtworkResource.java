@@ -223,13 +223,18 @@ public class ArtworkResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArtwork(@PathVariable Long id) {
+    public ResponseEntity<ArtworkDTO> deleteArtwork(@PathVariable Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to delete Artwork : {}", id);
-        artworkService.delete(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        this.validateId(id, artworkDTO);
+        this.validateArtworkExists(id);
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            artworkService.delete(id);
+            return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        }
+
+        ArtworkDTO result = artworkService.deletePending(artworkDTO);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
     }
 
 
