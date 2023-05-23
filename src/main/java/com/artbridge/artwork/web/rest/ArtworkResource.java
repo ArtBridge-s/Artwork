@@ -252,6 +252,13 @@ public class ArtworkResource {
         return new MemberDTO(userId,  authentication.getName());
     }
 
+    /**
+     * 주어진 id와 ArtworkDTO의 id를 검증합니다.
+     *
+     * @param id           검증할 id
+     * @param artworkDTO   검증할 ArtworkDTO 객체
+     * @throws BadRequestAlertException ArtworkDTO의 id가 null인 경우 또는 주어진 id와 ArtworkDTO의 id가 다른 경우 발생합니다.
+     */
     private void validateId(Long id, ArtworkDTO artworkDTO) {
         if (artworkDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -261,6 +268,13 @@ public class ArtworkResource {
         }
     }
 
+    /**
+     * 주어진 id에 해당하는 Artwork가 존재하는지 검증합니다.
+     *
+     * @param id 검증할 Artwork의 식별자(ID)
+     * @return 주어진 id에 해당하는 Artwork 객체
+     * @throws BadRequestAlertException Artwork가 존재하지 않는 경우 발생합니다.
+     */
     private Artwork validateArtworkExists(Long id) {
         return artworkRepository.findById(id)
             .orElseThrow(() -> new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
@@ -280,6 +294,13 @@ public class ArtworkResource {
         return optToken.get();
     }
 
+
+    /**
+     * 주어진 Artwork의 소유권을 현재 사용자의 소유권과 비교하여 검증합니다.
+     *
+     * @param artwork 소유권을 검증할 Artwork 객체
+     * @throws BadRequestAlertException 현재 사용자가 Artwork의 소유자가 아닌 경우 발생합니다.
+     */
     private void validateOwnership(Artwork artwork) {
         String token = this.validateAndGetToken();
         MemberDTO memberDTO = this.createMember(token);
