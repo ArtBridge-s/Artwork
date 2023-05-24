@@ -57,6 +57,12 @@ public interface LikeService {
      */
     void delete(Long id);
 
+    /**
+     * Artwork ID를 기준으로 Like 개수를 조회합니다.
+     *
+     * @param artworkId Artwork의 식별자(ID)
+     * @return Artwork ID를 기준으로 조회된 Like의 개수
+     */
     Long countByArtworkId(Long artworkId);
 
 }
