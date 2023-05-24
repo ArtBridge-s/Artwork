@@ -9,6 +9,7 @@ import com.artbridge.artwork.service.dto.MemberDTO;
 import com.artbridge.artwork.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -144,15 +145,21 @@ public class CommentResource {
     }
 
     /**
-     * {@code GET  /comments} : get all the comments.
+     * {@code GET /comments} : 특정 Artwork의 모든 Comment를 조회합니다.
      *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of comments in body.
+     * @param artworkId 조회할 Artwork의 식별자(ID)
+     * @param pageable 페이지네이션 정보
+     * @return 조회된 Comment 리스트를 담은 ResponseEntity
      */
     @GetMapping
-    public ResponseEntity<List<CommentDTO>> getAllComments(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<CommentDTO>> getAllComments(@RequestParam(value = "artworkId") Long artworkId, @org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Comments");
-        Page<CommentDTO> page = commentService.findAll(pageable);
+
+        if(!commentRepository.existsByArtwork_Id(artworkId)) {
+            return ResponseEntity.ok().body(new ArrayList<>());
+        }
+
+        Page<CommentDTO> page = commentService.findByArtwokId(pageable, artworkId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
