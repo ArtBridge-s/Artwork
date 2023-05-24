@@ -65,6 +65,11 @@ public class CommentResource {
         if (commentDTO.getId() != null) {
             throw new BadRequestAlertException("A new comment cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+        commentDTO.setMember(memberDTO);
+
         CommentDTO result = commentService.save(commentDTO);
         return ResponseEntity
             .created(new URI("/api/comments/" + result.getId()))
