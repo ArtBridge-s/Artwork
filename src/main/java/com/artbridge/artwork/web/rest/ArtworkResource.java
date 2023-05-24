@@ -113,7 +113,7 @@ public class ArtworkResource {
     }
 
 
-
+/*))***************TODO: - 분리*/
     /**
      * GET /pendingList/Create : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
      *
@@ -148,7 +148,12 @@ public class ArtworkResource {
     }
 
 
-
+    /**
+     * {@code GET /artworks/pending/deletes} : 관리자 권한이 있는 경우 삭제 대기 중인 Artwork 목록을 페이지별로 조회합니다.
+     *
+     * @param pageable 페이지 정보 (Pageable)
+     * @return 페이지별로 조회된 삭제 대기 중인 Artwork 목록을 담은 ResponseEntity
+     */
     @GetMapping("/pending/deletes")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<ArtworkDTO>> getDeletePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
@@ -157,7 +162,7 @@ public class ArtworkResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-
+/****************************************************/
 
 
     /**
