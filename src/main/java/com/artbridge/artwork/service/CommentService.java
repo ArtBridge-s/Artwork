@@ -56,4 +56,6 @@ public interface CommentService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<CommentDTO> findByArtwokId(Pageable pageable, Long artworkId);
 }

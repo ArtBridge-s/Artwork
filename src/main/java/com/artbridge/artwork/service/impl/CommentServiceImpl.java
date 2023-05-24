@@ -82,4 +82,10 @@ public class CommentServiceImpl implements CommentService {
         log.debug("Request to delete Comment : {}", id);
         commentRepository.deleteById(id);
     }
+
+    @Override
+    public Page<CommentDTO> findByArtwokId(Pageable pageable, Long artworkId) {
+        log.debug("Request to get Comment : {}", artworkId);
+        return commentRepository.findByArtwork_Id(pageable, artworkId).map(commentMapper::toDto);
+    }
 }
