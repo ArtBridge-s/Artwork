@@ -339,7 +339,7 @@ public class ArtworkResource {
      * @return 유효한 JWT 토큰
      * @throws BadRequestAlertException JWT 토큰이 잘못되었거나 존재하지 않는 경우
      */
-    private String validateAndGetToken() {
+    private String validateAndGetToken() {/*TODO -REFACTOR*/
         Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
         if (optToken.isEmpty() || !this.tokenProvider.validateToken(optToken.get())) {
             throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
