@@ -57,6 +57,6 @@ public interface LikeService {
      */
     void delete(Long id);
 
-    Long countByPostId(Long artworkId);
+    Long countByArtworkId(Long artworkId);
 
 }
