@@ -145,10 +145,11 @@ public class CommentResource {
     }
 
     /**
-     * {@code GET  /comments} : get all the comments.
+     * {@code GET /comments} : 특정 Artwork의 모든 Comment를 조회합니다.
      *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of comments in body.
+     * @param artworkId 조회할 Artwork의 식별자(ID)
+     * @param pageable 페이지네이션 정보
+     * @return 조회된 Comment 리스트를 담은 ResponseEntity
      */
     @GetMapping
     public ResponseEntity<List<CommentDTO>> getAllComments(@RequestParam(value = "artworkId") Long artworkId, @org.springdoc.api.annotations.ParameterObject Pageable pageable) {
