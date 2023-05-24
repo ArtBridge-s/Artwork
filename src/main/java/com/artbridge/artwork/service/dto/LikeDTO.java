@@ -2,7 +2,6 @@ package com.artbridge.artwork.service.dto;
 
 import java.io.Serializable;
 
-import com.artbridge.artwork.domain.valueobject.Member;
 import lombok.Data;
 
 /**
