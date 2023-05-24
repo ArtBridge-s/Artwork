@@ -53,6 +53,8 @@ public class LikeResource {
         this.tokenProvider = tokenProvider;
     }
 
+
+
     /**
      * {@code POST /likes} : Like을 생성합니다.
      *
@@ -81,6 +83,8 @@ public class LikeResource {
             .body(result);
     }
 
+
+
     /**
      * {@code PUT  /likes/:id} : Updates an existing like.
      *
@@ -102,6 +106,8 @@ public class LikeResource {
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, likeDTO.getId().toString()))
             .body(result);
     }
+
+
 
     /**
      * {@code PATCH  /likes/:id} : Partial updates given fields of an existing like, field will ignore if it is null
@@ -127,6 +133,7 @@ public class LikeResource {
         );
     }
 
+
     /**
      * {@code GET  /likes} : get all the likes.
      *
@@ -141,6 +148,8 @@ public class LikeResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+
+
     /**
      * {@code GET  /likes/:id} : get the "id" like.
      *
@@ -153,6 +162,7 @@ public class LikeResource {
         Optional<LikeDTO> likeDTO = likeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(likeDTO);
     }
+
 
 
     /**
@@ -210,6 +220,8 @@ public class LikeResource {
         }
     }
 
+
+
     /**
      * 현재 사용자로부터 얻은 JWT 토큰을 유효성 검사하고 유효한 토큰을 반환합니다.
      *
@@ -223,6 +235,7 @@ public class LikeResource {
         }
         return optToken.get();
     }
+
 
 
     /**
