@@ -99,6 +99,12 @@ public class ArtworkServiceImpl implements ArtworkService {
     }
 
     @Override
+    public Page<ArtworkDTO> findDeletePendings(Pageable pageable) {
+        log.debug("Request to get all Artworks");
+        return artworkRepository.findAllByStatus(Status.DELETE_PENDING, pageable).map(artworkMapper::toDto);
+    }
+
+    @Override
     public ArtworkDTO deletePending(ArtworkDTO artworkDTO) {
         log.debug("Request to delete Artwork : {}", artworkDTO);
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
