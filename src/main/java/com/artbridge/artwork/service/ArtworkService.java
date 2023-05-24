@@ -17,6 +17,7 @@ public interface ArtworkService {
      */
     ArtworkDTO save(ArtworkDTO artworkDTO);
 
+
     /**
      * Updates a artwork.
      *
@@ -24,6 +25,7 @@ public interface ArtworkService {
      * @return the persisted entity.
      */
     ArtworkDTO update(ArtworkDTO artworkDTO);
+
 
     /**
      * Partially updates a artwork.
@@ -33,6 +35,7 @@ public interface ArtworkService {
      */
     Optional<ArtworkDTO> partialUpdate(ArtworkDTO artworkDTO);
 
+
     /**
      * Get all the artworks.
      *
@@ -41,6 +44,7 @@ public interface ArtworkService {
      */
     Page<ArtworkDTO> findAll(Pageable pageable);
 
+
     /**
      * Get the "id" artwork.
      *
@@ -48,6 +52,7 @@ public interface ArtworkService {
      * @return the entity.
      */
     Optional<ArtworkDTO> findOne(Long id);
+
 
     /**
      * Delete the "id" artwork.
@@ -74,6 +79,8 @@ public interface ArtworkService {
      * @return 페이지별로 조회된 업데이트 대기 중인 Artwork 목록 (Page 객체)
      */
     Page<ArtworkDTO> findUpdatePendings(Pageable pageable);
+
+    Page<ArtworkDTO> findDeletePendings(Pageable pageable);
 
 
 
