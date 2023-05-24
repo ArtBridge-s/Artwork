@@ -54,11 +54,12 @@ public class LikeResource {
     }
 
     /**
-     * {@code POST  /likes} : Create a new like.
+     * {@code POST /likes} : Like을 생성합니다.
      *
-     * @param likeDTO the likeDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new likeDTO, or with status {@code 400 (Bad Request)} if the like has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @param likeDTO 생성할 Like의 정보를 담은 LikeDTO 객체
+     * @return 생성된 Like의 정보를 담은 ResponseEntity
+     * @throws URISyntaxException URI 구문 예외가 발생하는 경우
+     * @throws BadRequestAlertException Like 생성 실패 시 발생하는 BadRequestAlertException
      */
     @PostMapping
     public ResponseEntity<LikeDTO> createLike(@RequestBody LikeDTO likeDTO) throws URISyntaxException {
@@ -70,6 +71,7 @@ public class LikeResource {
         String token = this.validateAndGetToken();
 
         MemberDTO memberDTO = this.createMember(token);
+
         likeDTO.setMember(memberDTO);
 
         LikeDTO result = likeService.save(likeDTO);
