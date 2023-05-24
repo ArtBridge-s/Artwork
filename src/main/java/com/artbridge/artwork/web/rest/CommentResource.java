@@ -52,12 +52,14 @@ public class CommentResource {
         this.tokenProvider = tokenProvider;
     }
 
+
     /**
-     * {@code POST  /comments} : Create a new comment.
+     * {@code POST /comments} : Comment를 생성합니다.
      *
-     * @param commentDTO the commentDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new commentDTO, or with status {@code 400 (Bad Request)} if the comment has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @param commentDTO 생성할 Comment의 정보를 담은 CommentDTO 객체
+     * @return 생성된 Comment의 정보를 담은 ResponseEntity
+     * @throws URISyntaxException URI 구문 예외가 발생하는 경우
+     * @throws BadRequestAlertException Comment 생성 실패 시 발생하는 BadRequestAlertException
      */
     @PostMapping("/comments")
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) throws URISyntaxException {
