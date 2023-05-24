@@ -76,8 +76,7 @@ public class LikeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<LikeDTO> updateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO)
-        throws URISyntaxException {
+    public ResponseEntity<LikeDTO> updateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) throws URISyntaxException {
         log.debug("REST request to update Like : {}, {}", id, likeDTO);
         if (likeDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -109,10 +108,7 @@ public class LikeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<LikeDTO> partialUpdateLike(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody LikeDTO likeDTO
-    ) throws URISyntaxException {
+    public ResponseEntity<LikeDTO> partialUpdateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) throws URISyntaxException {
         log.debug("REST request to partial update Like partially : {}, {}", id, likeDTO);
         if (likeDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
