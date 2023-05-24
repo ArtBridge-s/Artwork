@@ -121,7 +121,7 @@ public class ArtworkResource {
      * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
      * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
      */
-    @GetMapping("/pendingList/Create")
+    @GetMapping("/pending/creates")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<ArtworkDTO>> getPendingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
