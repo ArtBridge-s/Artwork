@@ -213,7 +213,7 @@ public class LikeResource {
      * @param token JWT 토큰
      * @return MemberDTO 객체
      */
-    private MemberDTO createMember(String token) {
+    private MemberDTO createMember(String token) { /*TODO -REFACTOR*/
         Authentication authentication = this.tokenProvider.getAuthentication(token);
         Long userId = this.tokenProvider.getUserIdFromToken(token);
         return new MemberDTO(userId,  authentication.getName());
