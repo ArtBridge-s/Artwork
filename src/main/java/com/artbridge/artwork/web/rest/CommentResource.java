@@ -83,10 +83,7 @@ public class CommentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/comments/{id}")
-    public ResponseEntity<CommentDTO> updateComment(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CommentDTO commentDTO
-    ) throws URISyntaxException {
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable(value = "id", required = false) final Long id, @RequestBody CommentDTO commentDTO) throws URISyntaxException {
         log.debug("REST request to update Comment : {}, {}", id, commentDTO);
         if (commentDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -118,10 +115,7 @@ public class CommentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/comments/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<CommentDTO> partialUpdateComment(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CommentDTO commentDTO
-    ) throws URISyntaxException {
+    public ResponseEntity<CommentDTO> partialUpdateComment(@PathVariable(value = "id", required = false) final Long id, @RequestBody CommentDTO commentDTO) throws URISyntaxException {
         log.debug("REST request to partial update Comment partially : {}, {}", id, commentDTO);
         if (commentDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -202,8 +196,6 @@ public class CommentResource {
         }
         return optToken.get();
     }
-
-
 
     /**
      * 주어진 토큰을 사용하여 MemberDTO 객체를 생성합니다.
