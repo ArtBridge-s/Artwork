@@ -78,9 +78,12 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Like : {}", id);
-        likeRepository.deleteById(id);
+    public void delete(Long artwork_id, Long member_id) {
+        log.debug("Request to delete Like : {}", artwork_id);
+
+        if (likeRepository.existsByArtwork_IdAndMember_Id(artwork_id, member_id)) {
+            likeRepository.deleteByArtwork_IdAndMember_Id(artwork_id, member_id);
+        }
     }
 
     @Override

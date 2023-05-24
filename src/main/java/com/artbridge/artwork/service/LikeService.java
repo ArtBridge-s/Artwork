@@ -53,9 +53,10 @@ public interface LikeService {
     /**
      * Delete the "id" like.
      *
-     * @param id the id of the entity.
+     * @param id          the id of the entity.
+     * @param memberDTOId
      */
-    void delete(Long id);
+    void delete(Long artworkid, Long memberDTOId);
 
     /**
      * Artwork ID를 기준으로 Like 개수를 조회합니다.
