@@ -78,16 +78,7 @@ public class LikeResource {
     @PutMapping("/{id}")
     public ResponseEntity<LikeDTO> updateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) throws URISyntaxException {
         log.debug("REST request to update Like : {}, {}", id, likeDTO);
-        if (likeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, likeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!likeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
+        this.validateLike(id, likeDTO);
 
         LikeDTO result = likeService.update(likeDTO);
         return ResponseEntity
@@ -110,16 +101,7 @@ public class LikeResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<LikeDTO> partialUpdateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) throws URISyntaxException {
         log.debug("REST request to partial update Like partially : {}, {}", id, likeDTO);
-        if (likeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, likeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!likeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
+        this.validateLike(id, likeDTO);
 
         Optional<LikeDTO> result = likeService.partialUpdate(likeDTO);
 
@@ -170,5 +152,22 @@ public class LikeResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+
+
+
+
+
+    private void validateLike(Long id, LikeDTO likeDTO) {
+        if (likeDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, likeDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!likeRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
     }
 }
