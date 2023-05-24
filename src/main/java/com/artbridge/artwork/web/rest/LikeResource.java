@@ -26,7 +26,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.artbridge.artwork.domain.Like}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/likes")
 public class LikeResource {
 
     private final Logger log = LoggerFactory.getLogger(LikeResource.class);
@@ -52,7 +52,7 @@ public class LikeResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new likeDTO, or with status {@code 400 (Bad Request)} if the like has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/likes")
+    @PostMapping
     public ResponseEntity<LikeDTO> createLike(@RequestBody LikeDTO likeDTO) throws URISyntaxException {
         log.debug("REST request to save Like : {}", likeDTO);
         if (likeDTO.getId() != null) {
@@ -75,7 +75,7 @@ public class LikeResource {
      * or with status {@code 500 (Internal Server Error)} if the likeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/likes/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<LikeDTO> updateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO)
         throws URISyntaxException {
         log.debug("REST request to update Like : {}, {}", id, likeDTO);
@@ -108,7 +108,7 @@ public class LikeResource {
      * or with status {@code 500 (Internal Server Error)} if the likeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/likes/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<LikeDTO> partialUpdateLike(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody LikeDTO likeDTO
@@ -139,7 +139,7 @@ public class LikeResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of likes in body.
      */
-    @GetMapping("/likes")
+    @GetMapping
     public ResponseEntity<List<LikeDTO>> getAllLikes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Likes");
         Page<LikeDTO> page = likeService.findAll(pageable);
@@ -153,7 +153,7 @@ public class LikeResource {
      * @param id the id of the likeDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/likes/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<LikeDTO> getLike(@PathVariable Long id) {
         log.debug("REST request to get Like : {}", id);
         Optional<LikeDTO> likeDTO = likeService.findOne(id);
@@ -166,7 +166,7 @@ public class LikeResource {
      * @param id the id of the likeDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/likes/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLike(@PathVariable Long id) {
         log.debug("REST request to delete Like : {}", id);
         likeService.delete(id);
