@@ -56,6 +56,8 @@ public interface ArtworkService {
      */
     void delete(Long id);
 
+
+
     /**
      *보류 중인 Artwork의 페이지를 검색합니다.
      *
@@ -65,6 +67,10 @@ public interface ArtworkService {
      */
     Page<ArtworkDTO> findPendingList(Pageable pageable);
 
+    Page<ArtworkDTO> findUpdatePendings(Pageable pageable);
+
+
+
     /**
      * Artwork를 삭제 대기 상태로 변경합니다.
      *
@@ -72,4 +78,6 @@ public interface ArtworkService {
      * @return 업데이트된 Artwork의 정보를 담은 ArtworkDTO 객체
      */
     ArtworkDTO deletePending(ArtworkDTO artworkDTO);
+
+
 }
