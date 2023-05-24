@@ -9,11 +9,12 @@ import org.springframework.data.domain.Pageable;
  * Service Interface for managing {@link com.artbridge.artwork.domain.Comment}.
  */
 public interface CommentService {
+
     /**
-     * Save a comment.
+     * Comment를 저장합니다.
      *
-     * @param commentDTO the entity to save.
-     * @return the persisted entity.
+     * @param commentDTO 저장할 Comment의 정보를 담은 CommentDTO 객체
+     * @return 저장된 Comment의 정보를 담은 CommentDTO 객체
      */
     CommentDTO save(CommentDTO commentDTO);
 
