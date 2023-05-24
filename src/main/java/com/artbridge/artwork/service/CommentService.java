@@ -57,5 +57,12 @@ public interface CommentService {
      */
     void delete(Long id);
 
+    /**
+     * Artwork ID를 기준으로 Comment를 페이지네이션하여 조회합니다.
+     *
+     * @param pageable 페이지네이션 정보
+     * @param artworkId Artwork의 식별자(ID)
+     * @return 페이지네이션된 Comment 리스트를 담은 Page 객체
+     */
     Page<CommentDTO> findByArtwokId(Pageable pageable, Long artworkId);
 }
