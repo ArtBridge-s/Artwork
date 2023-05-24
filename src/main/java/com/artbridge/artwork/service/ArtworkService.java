@@ -65,7 +65,7 @@ public interface ArtworkService {
      * @return ArtworkDTO의 페이지 객체
      * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
      */
-    Page<ArtworkDTO> findPendingList(Pageable pageable);
+    Page<ArtworkDTO> findCreatePendings(Pageable pageable);
 
     Page<ArtworkDTO> findUpdatePendings(Pageable pageable);
 

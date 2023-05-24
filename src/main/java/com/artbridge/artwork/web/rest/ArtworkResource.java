@@ -123,9 +123,9 @@ public class ArtworkResource {
      */
     @GetMapping("/pending/creates")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<ArtworkDTO>> getPendingList(@org.springdoc.api.annotations.ParameterObject Pageable pageable) { /*TODO: - 메서드 이름 수정*/
+    public ResponseEntity<List<ArtworkDTO>> getCreatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) { /*TODO: - 메서드 이름 수정*/
         log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findPendingList(pageable);
+        Page<ArtworkDTO> page = artworkService.findCreatePendings(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
