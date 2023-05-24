@@ -172,6 +172,15 @@ public class LikeResource {
 
 
 
+    @GetMapping("/counts")
+    public ResponseEntity<Long> getLikeCount(@RequestParam Long artworkId) {
+        log.debug("REST request to get Like Count : {}", artworkId);
+        Long count = likeService.countByPostId(artworkId);
+        return ResponseEntity.ok().body(count);
+    }
+
+
+
 
     /**
      * Like 정보를 검증합니다.
