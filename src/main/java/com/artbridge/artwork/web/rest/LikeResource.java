@@ -158,19 +158,19 @@ public class LikeResource {
     /**
      * {@code DELETE /likes/{id}} : Like을 삭제합니다.
      *
-     * @param artworkid 삭제할 Like의 Artwork ID
+     * @param artworkId 삭제할 Like의 Artwork ID
      * @return 삭제된 Like 정보를 담은 ResponseEntity
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLike(@PathVariable(value = "id") Long artworkid) {
-        log.debug("REST request to delete Like : {}", artworkid);
+    public ResponseEntity<Void> deleteLike(@PathVariable(value = "id") Long artworkId) {
+        log.debug("REST request to delete Like : {}", artworkId);
         String token = this.validateAndGetToken();
         MemberDTO memberDTO = this.createMember(token);
 
-        likeService.delete(artworkid, memberDTO.getId());
+        likeService.delete(artworkId, memberDTO.getId());
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, artworkid.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, artworkId.toString()))
             .build();
     }
 
