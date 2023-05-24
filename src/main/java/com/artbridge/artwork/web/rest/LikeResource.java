@@ -53,6 +53,8 @@ public class LikeResource {
         this.tokenProvider = tokenProvider;
     }
 
+
+
     /**
      * {@code POST /likes} : Like을 생성합니다.
      *
@@ -81,6 +83,8 @@ public class LikeResource {
             .body(result);
     }
 
+
+
     /**
      * {@code PUT  /likes/:id} : Updates an existing like.
      *
@@ -102,6 +106,8 @@ public class LikeResource {
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, likeDTO.getId().toString()))
             .body(result);
     }
+
+
 
     /**
      * {@code PATCH  /likes/:id} : Partial updates given fields of an existing like, field will ignore if it is null
@@ -127,6 +133,7 @@ public class LikeResource {
         );
     }
 
+
     /**
      * {@code GET  /likes} : get all the likes.
      *
@@ -141,6 +148,8 @@ public class LikeResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+
+
     /**
      * {@code GET  /likes/:id} : get the "id" like.
      *
@@ -154,19 +163,24 @@ public class LikeResource {
         return ResponseUtil.wrapOrNotFound(likeDTO);
     }
 
+
+
     /**
-     * {@code DELETE  /likes/:id} : delete the "id" like.
+     * {@code DELETE /likes/{id}} : Like을 삭제합니다.
      *
-     * @param id the id of the likeDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     * @param artworkId 삭제할 Like의 Artwork ID
+     * @return 삭제된 Like 정보를 담은 ResponseEntity
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLike(@PathVariable Long id) {
-        log.debug("REST request to delete Like : {}", id);
-        likeService.delete(id);
+    public ResponseEntity<Void> deleteLike(@PathVariable(value = "id") Long artworkId) {
+        log.debug("REST request to delete Like : {}", artworkId);
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+
+        likeService.delete(artworkId, memberDTO.getId());
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, artworkId.toString()))
             .build();
     }
 
@@ -206,6 +220,8 @@ public class LikeResource {
         }
     }
 
+
+
     /**
      * 현재 사용자로부터 얻은 JWT 토큰을 유효성 검사하고 유효한 토큰을 반환합니다.
      *
@@ -219,6 +235,7 @@ public class LikeResource {
         }
         return optToken.get();
     }
+
 
 
     /**

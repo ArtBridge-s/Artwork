@@ -50,12 +50,14 @@ public interface LikeService {
      */
     Optional<LikeDTO> findOne(Long id);
 
+
     /**
-     * Delete the "id" like.
+     * 주어진 Artwork ID와 MemberDTO ID를 기준으로 Like을 삭제합니다.
      *
-     * @param id the id of the entity.
+     * @param artworkId 삭제할 Like의 Artwork ID
+     * @param memberId Like을 소유한 MemberDTO의 ID
      */
-    void delete(Long id);
+    void delete(Long artworkId, Long memberId);
 
     /**
      * Artwork ID를 기준으로 Like 개수를 조회합니다.

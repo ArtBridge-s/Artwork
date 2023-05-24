@@ -31,6 +31,7 @@ public class LikeServiceImpl implements LikeService {
         this.likeMapper = likeMapper;
     }
 
+
     @Override
     public LikeDTO save(LikeDTO likeDTO) {
         log.debug("Request to save Like : {}", likeDTO);
@@ -40,6 +41,7 @@ public class LikeServiceImpl implements LikeService {
         return likeMapper.toDto(like);
     }
 
+
     @Override
     public LikeDTO update(LikeDTO likeDTO) {
         log.debug("Request to update Like : {}", likeDTO);
@@ -47,6 +49,7 @@ public class LikeServiceImpl implements LikeService {
         like = likeRepository.save(like);
         return likeMapper.toDto(like);
     }
+
 
     @Override
     public Optional<LikeDTO> partialUpdate(LikeDTO likeDTO) {
@@ -63,12 +66,14 @@ public class LikeServiceImpl implements LikeService {
             .map(likeMapper::toDto);
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public Page<LikeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Likes");
         return likeRepository.findAll(pageable).map(likeMapper::toDto);
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -77,11 +82,16 @@ public class LikeServiceImpl implements LikeService {
         return likeRepository.findById(id).map(likeMapper::toDto);
     }
 
+
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Like : {}", id);
-        likeRepository.deleteById(id);
+    public void delete(Long artworkId, Long memberId) {
+        log.debug("Request to delete Like : {}", artworkId);
+
+        if (likeRepository.existsByArtwork_IdAndMember_Id(artworkId, memberId)) {
+            likeRepository.deleteByArtwork_IdAndMember_Id(artworkId, memberId);
+        }
     }
+
 
     @Override
     public Long countByArtworkId(Long artworkId) {
