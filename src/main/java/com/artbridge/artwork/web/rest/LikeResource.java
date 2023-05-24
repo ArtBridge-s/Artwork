@@ -157,8 +157,13 @@ public class LikeResource {
 
 
 
-
-
+    /**
+     * Like 정보를 검증합니다.
+     *
+     * @param id       Like의 식별자(ID)
+     * @param likeDTO  검증할 LikeDTO 객체
+     * @throws BadRequestAlertException 검증 실패 시 발생하는 BadRequestAlertException
+     */
     private void validateLike(Long id, LikeDTO likeDTO) {
         if (likeDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
