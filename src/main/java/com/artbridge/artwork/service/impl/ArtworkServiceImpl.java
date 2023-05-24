@@ -87,7 +87,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     }
 
     @Override
-    public Page<ArtworkDTO> findPendingList(Pageable pageable) {
+    public Page<ArtworkDTO> findCreatePendings(Pageable pageable) {
         log.debug("Request to get all Artworks");
         return artworkRepository.findAllByStatus(Status.UPLOAD_PENDING, pageable).map(artworkMapper::toDto);
     }
