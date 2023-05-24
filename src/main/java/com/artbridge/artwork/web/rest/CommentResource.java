@@ -30,7 +30,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.artbridge.artwork.domain.Comment}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/comments")
 public class CommentResource {
 
     private final Logger log = LoggerFactory.getLogger(CommentResource.class);
@@ -61,7 +61,7 @@ public class CommentResource {
      * @throws URISyntaxException URI 구문 예외가 발생하는 경우
      * @throws BadRequestAlertException Comment 생성 실패 시 발생하는 BadRequestAlertException
      */
-    @PostMapping("/comments")
+    @PostMapping
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) throws URISyntaxException {
         log.debug("REST request to save Comment : {}", commentDTO);
         if (commentDTO.getId() != null) {
@@ -89,7 +89,7 @@ public class CommentResource {
      * or with status {@code 500 (Internal Server Error)} if the commentDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/comments/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CommentDTO> updateComment(@PathVariable(value = "id", required = false) final Long id, @RequestBody CommentDTO commentDTO) throws URISyntaxException {
         log.debug("REST request to update Comment : {}, {}", id, commentDTO);
         if (commentDTO.getId() == null) {
@@ -121,7 +121,7 @@ public class CommentResource {
      * or with status {@code 500 (Internal Server Error)} if the commentDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/comments/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<CommentDTO> partialUpdateComment(@PathVariable(value = "id", required = false) final Long id, @RequestBody CommentDTO commentDTO) throws URISyntaxException {
         log.debug("REST request to partial update Comment partially : {}, {}", id, commentDTO);
         if (commentDTO.getId() == null) {
@@ -149,7 +149,7 @@ public class CommentResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of comments in body.
      */
-    @GetMapping("/comments")
+    @GetMapping
     public ResponseEntity<List<CommentDTO>> getAllComments(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Comments");
         Page<CommentDTO> page = commentService.findAll(pageable);
@@ -163,7 +163,7 @@ public class CommentResource {
      * @param id the id of the commentDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the commentDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/comments/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CommentDTO> getComment(@PathVariable Long id) {
         log.debug("REST request to get Comment : {}", id);
         Optional<CommentDTO> commentDTO = commentService.findOne(id);
@@ -176,7 +176,7 @@ public class CommentResource {
      * @param id the id of the commentDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/comments/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         log.debug("REST request to delete Comment : {}", id);
         commentService.delete(id);
