@@ -35,6 +35,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDTO save(CommentDTO commentDTO) {
         log.debug("Request to save Comment : {}", commentDTO);
         Comment comment = commentMapper.toEntity(commentDTO);
+        /*TODO: - Event memberDto name*/
         comment = commentRepository.save(comment);
         return commentMapper.toDto(comment);
     }
