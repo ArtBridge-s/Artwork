@@ -1,8 +1,10 @@
 package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.repository.CommentRepository;
+import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.service.CommentService;
 import com.artbridge.artwork.service.dto.CommentDTO;
+import com.artbridge.artwork.service.dto.MemberDTO;
 import com.artbridge.artwork.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -177,5 +180,37 @@ public class CommentResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+
+
+
+
+    /**
+     * 현재 사용자로부터 얻은 JWT 토큰을 유효성 검사하고 유효한 토큰을 반환합니다.
+     *
+     * @return 유효한 JWT 토큰
+     * @throws BadRequestAlertException JWT 토큰이 잘못되었거나 존재하지 않는 경우
+     */
+    private String validateAndGetToken() { /*TODO -REFACTOR*/
+        Optional<String> optToken = SecurityUtils.getCurrentUserJWT();
+        if (optToken.isEmpty() || !this.tokenProvider.validateToken(optToken.get())) {
+            throw new BadRequestAlertException("Invalid JWT token", ENTITY_NAME, "invalidtoken");
+        }
+        return optToken.get();
+    }
+
+
+
+    /**
+     * 주어진 토큰을 사용하여 MemberDTO 객체를 생성합니다.
+     *
+     * @param token JWT 토큰
+     * @return MemberDTO 객체
+     */
+    private MemberDTO createMember(String token) { /*TODO -REFACTOR*/
+        Authentication authentication = this.tokenProvider.getAuthentication(token);
+        Long userId = this.tokenProvider.getUserIdFromToken(token);
+        return new MemberDTO(userId,  authentication.getName());
     }
 }
