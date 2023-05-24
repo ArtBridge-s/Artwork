@@ -56,4 +56,7 @@ public interface LikeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Long countByPostId(Long artworkId);
+
 }
