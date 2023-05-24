@@ -2,6 +2,7 @@ package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.repository.CommentRepository;
 import com.artbridge.artwork.security.SecurityUtils;
+import com.artbridge.artwork.security.jwt.TokenProvider;
 import com.artbridge.artwork.service.CommentService;
 import com.artbridge.artwork.service.dto.CommentDTO;
 import com.artbridge.artwork.service.dto.MemberDTO;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -44,9 +44,12 @@ public class CommentResource {
 
     private final CommentRepository commentRepository;
 
-    public CommentResource(CommentService commentService, CommentRepository commentRepository) {
+    private final TokenProvider tokenProvider;
+
+    public CommentResource(CommentService commentService, CommentRepository commentRepository, TokenProvider tokenProvider) {
         this.commentService = commentService;
         this.commentRepository = commentRepository;
+        this.tokenProvider = tokenProvider;
     }
 
     /**
