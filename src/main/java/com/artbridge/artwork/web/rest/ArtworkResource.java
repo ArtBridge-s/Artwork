@@ -149,6 +149,17 @@ public class ArtworkResource {
 
 
 
+    @GetMapping("/pending/deletes")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<ArtworkDTO>> getDeletePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Artworks");
+        Page<ArtworkDTO> page = artworkService.findDeletePendings(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+
     /**
      * 주어진 id에 해당하는 Artwork를 조회합니다.
      *
