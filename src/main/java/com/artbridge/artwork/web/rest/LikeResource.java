@@ -154,11 +154,12 @@ public class LikeResource {
         return ResponseUtil.wrapOrNotFound(likeDTO);
     }
 
+
     /**
-     * {@code DELETE  /likes/:id} : delete the "id" like.
+     * {@code DELETE /likes/{id}} : Like을 삭제합니다.
      *
-     * @param id the id of the likeDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     * @param artworkid 삭제할 Like의 Artwork ID
+     * @return 삭제된 Like 정보를 담은 ResponseEntity
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLike(@PathVariable(value = "id") Long artworkid) {
