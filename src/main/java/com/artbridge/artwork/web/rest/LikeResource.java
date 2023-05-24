@@ -161,12 +161,15 @@ public class LikeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLike(@PathVariable Long id) {
-        log.debug("REST request to delete Like : {}", id);
-        likeService.delete(id);
+    public ResponseEntity<Void> deleteLike(@PathVariable(value = "id") Long artworkid) {
+        log.debug("REST request to delete Like : {}", artworkid);
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+
+        likeService.delete(artworkid, memberDTO.getId());
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, artworkid.toString()))
             .build();
     }
 
