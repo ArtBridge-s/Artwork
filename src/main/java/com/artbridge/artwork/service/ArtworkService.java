@@ -67,6 +67,12 @@ public interface ArtworkService {
      */
     Page<ArtworkDTO> findCreatePendings(Pageable pageable);
 
+    /**
+     * 업데이트 대기 중인 Artwork 목록을 페이지별로 조회합니다.
+     *
+     * @param pageable 페이지 정보 (Pageable)
+     * @return 페이지별로 조회된 업데이트 대기 중인 Artwork 목록 (Page 객체)
+     */
     Page<ArtworkDTO> findUpdatePendings(Pageable pageable);
 
 
