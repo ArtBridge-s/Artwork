@@ -101,4 +101,5 @@ public interface ArtworkService {
     ArtworkDTO deletePending(ArtworkDTO artworkDTO);
 
 
+    ArtworkDTO authorizeOkArtwork(Long id);
 }
