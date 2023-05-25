@@ -231,6 +231,13 @@ public class ArtworkResource {
 
 
 
+    /**
+     * {@code PATCH /artworks/{id}/authorized/ok} : Artwork를 승인 처리합니다.
+     *
+     * @param id 승인할 Artwork의 식별자(ID)
+     * @return 승인된 Artwork의 정보를 담은 ResponseEntity
+     * @throws BadRequestAlertException Artwork 승인 처리 실패 시 발생하는 BadRequestAlertException
+     */
     @PatchMapping(value = "/{id}/authorized/ok")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<ArtworkDTO> authorizeOkArtwork(@PathVariable(value = "id", required = false) final Long id) {
