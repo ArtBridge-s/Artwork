@@ -112,4 +112,15 @@ public class ArtworkServiceImpl implements ArtworkService {
         artwork = artworkRepository.save(artwork);
         return artworkMapper.toDto(artwork);
     }
+
+    @Override
+    public ArtworkDTO authorizeOkArtwork(Long id) {
+        log.debug("Request to authorize Artwork : {}", id);
+        return artworkRepository.findById(id)
+            .map(artwork -> {
+                artwork.setStatus(Status.OK);
+                return artworkMapper.toDto(artworkRepository.save(artwork));
+            })
+            .orElseThrow();
+    }
 }
