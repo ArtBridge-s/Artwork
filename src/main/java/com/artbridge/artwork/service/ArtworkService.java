@@ -101,5 +101,12 @@ public interface ArtworkService {
     ArtworkDTO deletePending(ArtworkDTO artworkDTO);
 
 
+
+    /**
+     * Artwork를 승인 처리합니다.
+     *
+     * @param id 승인할 Artwork의 식별자(ID)
+     * @return 승인된 Artwork의 정보를 담은 ArtworkDTO 객체
+     */
     ArtworkDTO authorizeOkArtwork(Long id);
 }
