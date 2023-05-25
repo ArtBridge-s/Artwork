@@ -231,6 +231,25 @@ public class ArtworkResource {
 
 
 
+    @PatchMapping(value = "/{id}/authorized/ok")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<ArtworkDTO> authorizeOkArtwork(@PathVariable(value = "id", required = false) final Long id) {
+        log.debug("REST request to authorize ok Artwork : {}", id);
+
+        if (!artworkRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Artwork artwork = this.validateArtworkExists(id);
+        this.validateOwnership(artwork);
+
+        ArtworkDTO result = artworkService.authorizeOkArtwork(id);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString())).body(result);
+    }
+
+
+
     /**
      * {@code DELETE  /artworks/:id} : "id"에 해당하는 Artwork를 삭제합니다.
      * Artwork 삭제는 관리자 권한인 경우 즉시 삭제되며, 일반 사용자인 경우 삭제 대기 상태로 변경됩니다.
