@@ -136,14 +136,14 @@ jhipster:
       backup-count: 1
   registry:
     password: admin
-  cors:
-    allowed-origins: "*"
-    allowed-origin-patterns: "https?://localhost(:[0-9]+)?"
-    allowed-methods: "*"
-    allowed-headers: "*"
-    exposed-headers: "*"
-    allow-credentials: true
-    max-age: 1800
+#  cors:
+#    allowed-origins: "*"
+#    allowed-origin-patterns: "https?://localhost(:[0-9]+)?"
+#    allowed-methods: "*"
+#    allowed-headers: "*"
+#    exposed-headers: "*"
+#    allow-credentials: true
+#    max-age: 1800
   security:
     authentication:
       jwt:
