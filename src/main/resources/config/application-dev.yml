@@ -15,14 +15,14 @@
 
 logging:
   level:
-    ROOT: DEBUG
-    tech.jhipster: DEBUG
-    org.hibernate.SQL: DEBUG
-    com.artbridge.artwork: DEBUG
-    c.h.internal.diagnostics.HealthMonitor: DEBUG
-    org.apache.kafka.clients: DEBUG
-    com.hazelcast: DEBUG
-    com.netflix: DEBUG
+    ROOT: debug
+    tech.jhipster: debug
+    org.hibernate.SQL: debug
+    com.artbridge.artwork: debug
+    c.h.internal.diagnostics.HealthMonitor: info
+    org.apache.kafka.clients: off
+    com.hazelcast: info
+    com.netflix: info
 
 eureka:
   instance:
@@ -115,11 +115,10 @@ jhipster:
   # CORS is disabled by default on microservices, as you should access them through a gateway.
   # If you want to enable it, please uncomment the configuration below.
   cors:
-    allowed-origins:
-    allowed-origin-patterns: "http://localhost:63343"
-    allowed-methods: "*"
-    allowed-headers: "*"
-    exposed-headers: "*"
+    allowed-origins: 'http://localhost:63342'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params'
     allow-credentials: true
     max-age: 1800
   security:
