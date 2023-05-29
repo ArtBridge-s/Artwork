@@ -239,14 +239,14 @@ jhipster:
   clientApp:
     name: 'artworkApp'
   # By default CORS is disabled. Uncomment to enable.
-  cors:
-    allowed-origins:
-    allowed-origin-patterns: "*"
-    allowed-methods: "*"
-    allowed-headers: "*"
-    exposed-headers: "*"
-    allow-credentials: true
-    max-age: 1800
+#  cors:
+#    allowed-origins:
+#    allowed-origin-patterns: "*"
+#    allowed-methods: "*"
+#    allowed-headers: "*"
+#    exposed-headers: "*"
+#    allow-credentials: true
+#    max-age: 1800
   mail:
     from: Artwork@localhost
   api-docs:
