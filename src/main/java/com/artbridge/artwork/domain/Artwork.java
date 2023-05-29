@@ -63,19 +63,19 @@ public class Artwork implements Serializable {
     private Status status;
 
     @OneToMany(mappedBy = "artwork")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties(value = { "artwork" }, allowSetters = true)
     @ToString.Exclude
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "artwork")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties(value = { "artwork" }, allowSetters = true)
     @ToString.Exclude
     private Set<View> views = new HashSet<>();
 
     @OneToMany(mappedBy = "artwork")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties(value = { "artwork" }, allowSetters = true)
     @ToString.Exclude
     private Set<Like> likes = new HashSet<>();
