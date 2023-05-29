@@ -15,14 +15,14 @@
 
 logging:
   level:
-    ROOT: INFO
-    tech.jhipster: INFO
-    org.hibernate.SQL: INFO
-    com.artbridge.artwork: INFO
-    c.h.internal.diagnostics.HealthMonitor: OFF
-    org.apache.kafka.clients: OFF
-    com.hazelcast: INFO
-    com.netflix: INFO
+    ROOT: DEBUG
+    tech.jhipster: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.artbridge.artwork: DEBUG
+    c.h.internal.diagnostics.HealthMonitor: DEBUG
+    org.apache.kafka.clients: DEBUG
+    com.hazelcast: DEBUG
+    com.netflix: DEBUG
 
 eureka:
   instance:
