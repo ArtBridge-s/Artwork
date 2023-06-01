@@ -4,6 +4,7 @@ import com.artbridge.artwork.security.*;
 import com.artbridge.artwork.security.jwt.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -49,6 +50,10 @@ public class SecurityConfiguration {
             .and()
             .authorizeRequests()
             .antMatchers("/h2-console/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/artworks/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/comments/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/likes/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/views/**").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
