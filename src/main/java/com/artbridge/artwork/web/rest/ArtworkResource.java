@@ -247,8 +247,7 @@ public class ArtworkResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Artwork artwork = this.validateArtworkExists(id);
-        this.validateOwnership(artwork);
+        this.validateArtworkExists(id);
 
         ArtworkDTO result = artworkService.authorizeOkArtwork(id);
 
