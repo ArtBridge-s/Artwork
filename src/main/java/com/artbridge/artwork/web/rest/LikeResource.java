@@ -72,6 +72,10 @@ public class LikeResource {
 
         String token = this.validateAndGetToken();
 
+        if(likeRepository.existsByArtwork_IdAndMember_Id(likeDTO.getArtwork().getId(), this.tokenProvider.getUserIdFromToken(token))) {
+            throw new BadRequestAlertException("이미 좋아요를 누른 작품입니다.", ENTITY_NAME, "alreadyliked");
+        }
+
         MemberDTO memberDTO = this.createMember(token);
 
         likeDTO.setMember(memberDTO);
