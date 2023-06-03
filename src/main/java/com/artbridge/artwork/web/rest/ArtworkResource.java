@@ -113,57 +113,6 @@ public class ArtworkResource {
     }
 
 
-/*))***************TODO: - 분리*/
-    /**
-     * {@code GET /artworks/pendingList/Create} : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
-     *
-     * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
-     * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
-     * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
-     */
-    @GetMapping("/pending/creates")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<ArtworkDTO>> getCreatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findCreatePendings(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-
-
-    /**
-     * {@code GET /artworks/pending/updates} : 관리자 권한이 있는 경우 업데이트 대기 중인 Artwork 목록을 페이지별로 조회합니다.
-     *
-     * @param pageable 페이지 정보 (Pageable)
-     * @return 페이지별로 조회된 업데이트 대기 중인 Artwork 목록을 담은 ResponseEntity
-     */
-    @GetMapping("/pending/updates")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<ArtworkDTO>> getUpdatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findUpdatePendings(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-
-    /**
-     * {@code GET /artworks/pending/deletes} : 관리자 권한이 있는 경우 삭제 대기 중인 Artwork 목록을 페이지별로 조회합니다.
-     *
-     * @param pageable 페이지 정보 (Pageable)
-     * @return 페이지별로 조회된 삭제 대기 중인 Artwork 목록을 담은 ResponseEntity
-     */
-    @GetMapping("/pending/deletes")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<ArtworkDTO>> getDeletePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findDeletePendings(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-/****************************************************/
-
 
     /**
      * {@code GET  /artworks/:id} : 주어진 id에 해당하는 Artwork를 조회합니다.
@@ -279,6 +228,59 @@ public class ArtworkResource {
     }
 
 
+
+
+
+    /*))***************TODO: - 분리*/
+    /**
+     * {@code GET /artworks/pendingList/Create} : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
+     *
+     * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
+     * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
+     * @throws IllegalArgumentException pageable 매개변수가 null인 경우 발생합니다.
+     */
+    @GetMapping("/pending/creates")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<ArtworkDTO>> getCreatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Artworks");
+        Page<ArtworkDTO> page = artworkService.findCreatePendings(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+
+    /**
+     * {@code GET /artworks/pending/updates} : 관리자 권한이 있는 경우 업데이트 대기 중인 Artwork 목록을 페이지별로 조회합니다.
+     *
+     * @param pageable 페이지 정보 (Pageable)
+     * @return 페이지별로 조회된 업데이트 대기 중인 Artwork 목록을 담은 ResponseEntity
+     */
+    @GetMapping("/pending/updates")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<ArtworkDTO>> getUpdatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Artworks");
+        Page<ArtworkDTO> page = artworkService.findUpdatePendings(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+    /**
+     * {@code GET /artworks/pending/deletes} : 관리자 권한이 있는 경우 삭제 대기 중인 Artwork 목록을 페이지별로 조회합니다.
+     *
+     * @param pageable 페이지 정보 (Pageable)
+     * @return 페이지별로 조회된 삭제 대기 중인 Artwork 목록을 담은 ResponseEntity
+     */
+    @GetMapping("/pending/deletes")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<ArtworkDTO>> getDeletePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Artworks");
+        Page<ArtworkDTO> page = artworkService.findDeletePendings(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+/****************************************************/
 
 
 
