@@ -388,4 +388,14 @@ public class ArtworkResource {
             throw new BadRequestAlertException("You are not the owner of this artwork", ENTITY_NAME, "notowner");
         }
     }
+
+
+    private void validateOwnershipOrAdmin(Artwork artwork) {
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+
+        if (!artwork.getMember().getId().equals(memberDTO.getId()) || !SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            throw new BadRequestAlertException("작품의 소유자가 아니거나 관리자 권한이 없습니다", ENTITY_NAME, "notowner");
+        }
+    }
 }
