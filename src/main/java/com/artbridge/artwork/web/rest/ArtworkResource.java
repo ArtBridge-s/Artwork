@@ -229,7 +229,6 @@ public class ArtworkResource {
 
 
 
-    /*))***************TODO: - 분리*/
     /**
      * {@code GET /artworks/pendingList/Create} : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
      *
@@ -278,7 +277,6 @@ public class ArtworkResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-/****************************************************/
 
 
 
@@ -310,7 +308,7 @@ public class ArtworkResource {
      * @return ArtworkDTO 객체
      * @throws JsonProcessingException JSON 처리 중 오류가 발생한 경우
      */
-    private ArtworkDTO convertToDTO(String artworkDTOStr) throws IOException {
+    private ArtworkDTO convertToDTO(String artworkDTOStr) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
