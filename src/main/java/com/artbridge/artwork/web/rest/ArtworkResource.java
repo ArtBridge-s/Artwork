@@ -390,6 +390,12 @@ public class ArtworkResource {
     }
 
 
+    /**
+     * 작품의 소유자 또는 관리자 여부를 검증합니다.
+     *
+     * @param artwork 작품 객체
+     * @throws BadRequestAlertException 소유자가 아니거나 관리자 권한이 없는 경우 발생하는 예외
+     */
     private void validateOwnershipOrAdmin(Artwork artwork) {
         String token = this.validateAndGetToken();
         MemberDTO memberDTO = this.createMember(token);
