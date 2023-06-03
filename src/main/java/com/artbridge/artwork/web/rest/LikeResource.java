@@ -97,10 +97,9 @@ public class LikeResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated likeDTO,
      * or with status {@code 400 (Bad Request)} if the likeDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the likeDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<LikeDTO> updateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) throws URISyntaxException {
+    public ResponseEntity<LikeDTO> updateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) {
         log.debug("REST request to update Like : {}, {}", id, likeDTO);
         this.validateLike(id, likeDTO);
 
@@ -122,10 +121,9 @@ public class LikeResource {
      * or with status {@code 400 (Bad Request)} if the likeDTO is not valid,
      * or with status {@code 404 (Not Found)} if the likeDTO is not found,
      * or with status {@code 500 (Internal Server Error)} if the likeDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<LikeDTO> partialUpdateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) throws URISyntaxException {
+    public ResponseEntity<LikeDTO> partialUpdateLike(@PathVariable(value = "id", required = false) final Long id, @RequestBody LikeDTO likeDTO) {
         log.debug("REST request to partial update Like partially : {}, {}", id, likeDTO);
         this.validateLike(id, likeDTO);
 
