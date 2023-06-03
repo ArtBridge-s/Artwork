@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -77,7 +78,7 @@ public class ArtworkResource {
      * @throws JsonProcessingException   ArtworkDTO 문자열을 파싱하는 도중 발생하는 예외
      */
     @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, JsonProcessingException {
+    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
         ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
 
         log.debug("REST request to save Artwork : {}", artworkDTO);
@@ -309,8 +310,10 @@ public class ArtworkResource {
      * @return ArtworkDTO 객체
      * @throws JsonProcessingException JSON 처리 중 오류가 발생한 경우
      */
-    private ArtworkDTO convertToDTO(String artworkDTOStr) throws JsonProcessingException {
+    private ArtworkDTO convertToDTO(String artworkDTOStr) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
         return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
     }
 
