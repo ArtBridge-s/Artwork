@@ -67,7 +67,7 @@ public class ArtworkResource {
 
 
     /**
-     * Artwork를 생성합니다.
+     * {@code POST /artworks} : Artwork를 생성합니다.
      * MultipartFile은 업로드된 이미지 파일을 의미하며, ArtworkDTO는 Artwork의 정보를 포함하는 문자열입니다.
      *
      * @param file           업로드된 이미지 파일 (MultipartFile)
@@ -99,7 +99,7 @@ public class ArtworkResource {
 
 
     /**
-     * 모든 Artwork를 페이지별로 조회합니다.
+     * {@code GET /artworks} : 모든 Artwork를 페이지별로 조회합니다.
      *
      * @param pageable 페이지 정보 (Pageable)
      * @return 페이지별로 조회된 Artwork 목록을 담은 ResponseEntity
@@ -115,7 +115,7 @@ public class ArtworkResource {
 
 /*))***************TODO: - 분리*/
     /**
-     * GET /pendingList/Create : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
+     * {@code GET /artworks/pendingList/Create} : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
      *
      * @param pageable 페이징 정보 (페이지 번호, 페이지 크기, 정렬)가 포함된 객체
      * @return 상태 코드 200 (OK)와 몸체에 포함된 ArtworkDTO 목록을 가진 ResponseEntity
@@ -166,7 +166,7 @@ public class ArtworkResource {
 
 
     /**
-     * 주어진 id에 해당하는 Artwork를 조회합니다.
+     * {@code GET  /artworks/:id} : 주어진 id에 해당하는 Artwork를 조회합니다.
      *
      * @param id 조회할 Artwork의 식별자(ID)
      * @return 주어진 id에 해당하는 Artwork의 정보를 담은 ResponseEntity
@@ -179,11 +179,10 @@ public class ArtworkResource {
     }
 
 
-
     /**
-     * PUT /{id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트 요청합니다.
+     * {@code PUT   /artworks/:id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트 요청합니다.
      *
-     * @param id Artwork의 식별자
+     * @param id         Artwork의 식별자
      * @param artworkDTO 업데이트할 ArtworkDTO 객체
      * @return 상태 코드 200 (OK)와 업데이트된 ArtworkDTO를 가진 ResponseEntity
      * @throws BadRequestAlertException id가 잘못된 경우 (null이거나 잘못된 형식)
