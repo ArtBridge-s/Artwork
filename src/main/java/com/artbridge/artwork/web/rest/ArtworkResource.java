@@ -129,21 +129,18 @@ public class ArtworkResource {
 
 
     /**
-     * {@code PUT   /artworks/:id} : 이 엔드포인트는 주어진 id에 해당하는 Artwork를 업데이트 요청합니다.
+     * {@code PUT  /{id}} : 작품을 업데이트합니다.
      *
-     * @param id         Artwork의 식별자
-     * @param artworkDTO 업데이트할 ArtworkDTO 객체
-     * @return 상태 코드 200 (OK)와 업데이트된 ArtworkDTO를 가진 ResponseEntity
-     * @throws BadRequestAlertException id가 잘못된 경우 (null이거나 잘못된 형식)
-     * @throws BadRequestAlertException 업데이트할 Artwork가 존재하지 않는 경우
+     * @param id           작품의 ID
+     * @param artworkDTO   업데이트할 작품 데이터
+     * @return             {@link ResponseEntity} 객체로 응답 상태와 업데이트된 작품 정보를 담은 응답을 반환합니다.
      */
     @PutMapping("/{id}")
     public ResponseEntity<ArtworkDTO> updateArtwork(@PathVariable(value = "id", required = false) final Long id, @RequestBody ArtworkDTO artworkDTO) {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
 
         this.validateId(id, artworkDTO);
-        Artwork artwork = this.validateArtworkExists(id);
-        this.validateOwnership(artwork);
+        this.validateArtworkExists(id);
 
         ArtworkDTO result = artworkService.update(artworkDTO);
 
@@ -386,6 +383,22 @@ public class ArtworkResource {
 
         if (!artwork.getMember().getId().equals(memberDTO.getId())) {
             throw new BadRequestAlertException("You are not the owner of this artwork", ENTITY_NAME, "notowner");
+        }
+    }
+
+
+    /**
+     * 작품의 소유자 또는 관리자 여부를 검증합니다.
+     *
+     * @param artwork 작품 객체
+     * @throws BadRequestAlertException 소유자가 아니거나 관리자 권한이 없는 경우 발생하는 예외
+     */
+    private void validateOwnershipOrAdmin(Artwork artwork) {
+        String token = this.validateAndGetToken();
+        MemberDTO memberDTO = this.createMember(token);
+
+        if (!artwork.getMember().getId().equals(memberDTO.getId()) || !SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            throw new BadRequestAlertException("작품의 소유자가 아니거나 관리자 권한이 없습니다", ENTITY_NAME, "notowner");
         }
     }
 }
