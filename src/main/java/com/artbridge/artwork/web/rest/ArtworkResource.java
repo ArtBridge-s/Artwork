@@ -142,8 +142,7 @@ public class ArtworkResource {
         log.debug("REST request to update Artwork : {}, {}", id, artworkDTO);
 
         this.validateId(id, artworkDTO);
-        Artwork artwork = this.validateArtworkExists(id);
-        this.validateOwnership(artwork);
+        this.validateArtworkExists(id);
 
         ArtworkDTO result = artworkService.update(artworkDTO);
 
