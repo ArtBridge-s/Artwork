@@ -41,7 +41,7 @@ public class Artwork implements Serializable {
     @Column(name = "short_description")
     private String shortDescription;
 
-    @Column(name = "long_description")
+    @Column(name = "long_description", length = 1000)
     private String longDescription;
 
     @Column(name = "image_url")

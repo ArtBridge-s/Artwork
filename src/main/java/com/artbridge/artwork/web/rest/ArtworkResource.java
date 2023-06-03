@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -77,7 +78,7 @@ public class ArtworkResource {
      * @throws JsonProcessingException   ArtworkDTO 문자열을 파싱하는 도중 발생하는 예외
      */
     @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, JsonProcessingException {
+    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
         ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
 
         log.debug("REST request to save Artwork : {}", artworkDTO);
@@ -228,7 +229,6 @@ public class ArtworkResource {
 
 
 
-    /*))***************TODO: - 분리*/
     /**
      * {@code GET /artworks/pendingList/Create} : 이 엔드포인트는 Create 보류 중인 Artwork의 페이지된 목록을 검색합니다.
      *
@@ -277,7 +277,6 @@ public class ArtworkResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-/****************************************************/
 
 
 
@@ -311,6 +310,8 @@ public class ArtworkResource {
      */
     private ArtworkDTO convertToDTO(String artworkDTOStr) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+        mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
         return mapper.readValue(artworkDTOStr, ArtworkDTO.class);
     }
 
