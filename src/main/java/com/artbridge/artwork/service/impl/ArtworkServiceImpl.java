@@ -1,5 +1,6 @@
 package com.artbridge.artwork.service.impl;
 
+import com.artbridge.artwork.adaptor.MemberProducer;
 import com.artbridge.artwork.domain.Artwork;
 import com.artbridge.artwork.domain.enumeration.Status;
 import com.artbridge.artwork.repository.ArtworkRepository;
@@ -27,15 +28,19 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     private final ArtworkMapper artworkMapper;
 
-    public ArtworkServiceImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper) {
+    private final MemberProducer memberProducer;
+
+    public ArtworkServiceImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, MemberProducer memberProducer) {
         this.artworkRepository = artworkRepository;
         this.artworkMapper = artworkMapper;
+        this.memberProducer = memberProducer;
     }
 
     @Override
     public ArtworkDTO saveRequest(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        /*TODO: - Event memberDto name*/
+        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
+
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.UPLOAD_PENDING);
         artwork = artworkRepository.save(artwork);
@@ -127,7 +132,8 @@ public class ArtworkServiceImpl implements ArtworkService {
     @Override
     public ArtworkDTO save(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        /*TODO: - Event memberDto name*/
+        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
+
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.OK);
         artwork = artworkRepository.save(artwork);
