@@ -1,5 +1,7 @@
 package com.artbridge.artwork.service.impl;
 
+import com.artbridge.artwork.adaptor.MemberInPort;
+import com.artbridge.artwork.adaptor.MemberOutPort;
 import com.artbridge.artwork.domain.Artwork;
 import com.artbridge.artwork.domain.enumeration.Status;
 import com.artbridge.artwork.repository.ArtworkRepository;
@@ -19,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ArtworkServiceImpl implements ArtworkService {
+public class ArtworkServiceImpl implements ArtworkService, MemberInPort {
 
     private final Logger log = LoggerFactory.getLogger(ArtworkServiceImpl.class);
 
@@ -27,15 +29,19 @@ public class ArtworkServiceImpl implements ArtworkService {
 
     private final ArtworkMapper artworkMapper;
 
-    public ArtworkServiceImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper) {
+    private final MemberOutPort memberOutPort;
+
+    public ArtworkServiceImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, MemberOutPort memberOutPort) {
         this.artworkRepository = artworkRepository;
         this.artworkMapper = artworkMapper;
+        this.memberOutPort = memberOutPort;
     }
 
     @Override
-    public ArtworkDTO save(ArtworkDTO artworkDTO) {
+    public ArtworkDTO saveRequest(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        /*TODO: - Event memberDto name*/
+        this.memberOutPort.requestMemberName(artworkDTO.getMember().getId());
+
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.UPLOAD_PENDING);
         artwork = artworkRepository.save(artwork);
@@ -122,5 +128,25 @@ public class ArtworkServiceImpl implements ArtworkService {
                 return artworkMapper.toDto(artworkRepository.save(artwork));
             })
             .orElseThrow();
+    }
+
+    @Override
+    public ArtworkDTO save(ArtworkDTO artworkDTO) {
+        log.debug("Request to save Artwork : {}", artworkDTO);
+        this.memberOutPort.requestMemberName(artworkDTO.getMember().getId());
+
+        Artwork artwork = artworkMapper.toEntity(artworkDTO);
+        artwork.setStatus(Status.OK);
+        artwork = artworkRepository.save(artwork);
+        return artworkMapper.toDto(artwork);
+    }
+
+    @Override
+    public void updateMemberName(Long id, String name) {
+        log.debug("Request to update Artwork : {}", id);
+        artworkRepository.findAllByMemberId(id).forEach(artwork -> {
+            artwork.getMember().setName(name);
+            artworkRepository.save(artwork);
+        });
     }
 }

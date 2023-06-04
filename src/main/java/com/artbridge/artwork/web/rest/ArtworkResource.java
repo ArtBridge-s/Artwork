@@ -68,7 +68,7 @@ public class ArtworkResource {
 
 
     /**
-     * {@code POST /artworks} : Artwork를 생성합니다.
+     * {@code POST /artworks} : Artwork를 생성 요청합니다.
      * MultipartFile은 업로드된 이미지 파일을 의미하며, ArtworkDTO는 Artwork의 정보를 포함하는 문자열입니다.
      *
      * @param file           업로드된 이미지 파일 (MultipartFile)
@@ -78,7 +78,7 @@ public class ArtworkResource {
      * @throws JsonProcessingException   ArtworkDTO 문자열을 파싱하는 도중 발생하는 예외
      */
     @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
+    public ResponseEntity<ArtworkDTO> createArtworkRequest(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
         ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
 
         log.debug("REST request to save Artwork : {}", artworkDTO);
@@ -90,7 +90,7 @@ public class ArtworkResource {
 
         this.uploadImage(file, artworkDTO);
 
-        ArtworkDTO result = this.artworkService.save(artworkDTO);
+        ArtworkDTO result = this.artworkService.saveRequest(artworkDTO);
         return ResponseEntity
             .created(new URI("/api/artworks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -278,6 +278,36 @@ public class ArtworkResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+
+    /**
+     * 관리자 권한으로 Artwork를 생성합니다.
+     *
+     * @param file           업로드할 이미지 파일
+     * @param artworkDTOStr  ArtworkDTO를 포함한 JSON 문자열
+     * @return 생성된 ArtworkDTO 객체의 ResponseEntity
+     * @throws URISyntaxException URI 구문 예외가 발생할 경우
+     * @throws IOException        입출력 예외가 발생할 경우
+     */
+    @PostMapping("/admin")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
+        ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
+
+        log.debug("REST request to save Artwork : {}", artworkDTO);
+
+        String token = this.validateAndGetToken();
+
+        MemberDTO memberDTO = this.createMember(token);
+        artworkDTO.setMember(memberDTO);
+
+        this.uploadImage(file, artworkDTO);
+
+        ArtworkDTO result = this.artworkService.save(artworkDTO);
+        return ResponseEntity
+            .created(new URI("/api/artworks/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
 
 
 

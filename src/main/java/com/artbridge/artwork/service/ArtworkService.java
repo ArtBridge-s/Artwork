@@ -10,12 +10,12 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ArtworkService {
     /**
-     * Save a artwork.
+     * 주어진 ArtworkDTO를 저장 요청 합니다.
      *
-     * @param artworkDTO the entity to save.
-     * @return the persisted entity.
+     * @param artworkDTO 저장 요청할 ArtworkDTO 객체
+     * @return 저장 요청된 ArtworkDTO 객체
      */
-    ArtworkDTO save(ArtworkDTO artworkDTO);
+    ArtworkDTO saveRequest(ArtworkDTO artworkDTO);
 
 
     /**
@@ -109,4 +109,13 @@ public interface ArtworkService {
      * @return 승인된 Artwork의 정보를 담은 ArtworkDTO 객체
      */
     ArtworkDTO authorizeOkArtwork(Long id);
+
+
+    /**
+     * 주어진 ArtworkDTO를 저장합니다.
+     *
+     * @param artworkDTO 저장할 ArtworkDTO 객체
+     * @return 저장된 ArtworkDTO 객체
+     */
+    ArtworkDTO save(ArtworkDTO artworkDTO);
 }
