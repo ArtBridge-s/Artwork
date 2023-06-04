@@ -109,4 +109,6 @@ public interface ArtworkService {
      * @return 승인된 Artwork의 정보를 담은 ArtworkDTO 객체
      */
     ArtworkDTO authorizeOkArtwork(Long id);
+
+    ArtworkDTO save(ArtworkDTO artworkDTO);
 }

@@ -123,4 +123,14 @@ public class ArtworkServiceImpl implements ArtworkService {
             })
             .orElseThrow();
     }
+
+    @Override
+    public ArtworkDTO save(ArtworkDTO artworkDTO) {
+        log.debug("Request to save Artwork : {}", artworkDTO);
+        /*TODO: - Event memberDto name*/
+        Artwork artwork = artworkMapper.toEntity(artworkDTO);
+        artwork.setStatus(Status.OK);
+        artwork = artworkRepository.save(artwork);
+        return artworkMapper.toDto(artwork);
+    }
 }
