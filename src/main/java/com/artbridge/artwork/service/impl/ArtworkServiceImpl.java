@@ -33,7 +33,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     }
 
     @Override
-    public ArtworkDTO save(ArtworkDTO artworkDTO) {
+    public ArtworkDTO saveRequest(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
         /*TODO: - Event memberDto name*/
         Artwork artwork = artworkMapper.toEntity(artworkDTO);

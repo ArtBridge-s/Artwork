@@ -78,7 +78,7 @@ public class ArtworkResource {
      * @throws JsonProcessingException   ArtworkDTO 문자열을 파싱하는 도중 발생하는 예외
      */
     @PostMapping
-    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
+    public ResponseEntity<ArtworkDTO> createArtworkRequest(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
         ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
 
         log.debug("REST request to save Artwork : {}", artworkDTO);
@@ -90,7 +90,7 @@ public class ArtworkResource {
 
         this.uploadImage(file, artworkDTO);
 
-        ArtworkDTO result = this.artworkService.save(artworkDTO);
+        ArtworkDTO result = this.artworkService.saveRequest(artworkDTO);
         return ResponseEntity
             .created(new URI("/api/artworks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
