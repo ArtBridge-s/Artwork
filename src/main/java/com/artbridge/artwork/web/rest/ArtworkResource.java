@@ -280,6 +280,28 @@ public class ArtworkResource {
 
 
 
+    @PostMapping("/admin")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<ArtworkDTO> createArtwork(@RequestParam("image") MultipartFile file, @RequestParam("artworkDTO") String artworkDTOStr) throws URISyntaxException, IOException {
+        ArtworkDTO artworkDTO = convertToDTO(artworkDTOStr);
+
+        log.debug("REST request to save Artwork : {}", artworkDTO);
+
+        String token = this.validateAndGetToken();
+
+        MemberDTO memberDTO = this.createMember(token);
+        artworkDTO.setMember(memberDTO);
+
+        this.uploadImage(file, artworkDTO);
+
+        ArtworkDTO result = this.artworkService.save(artworkDTO);
+        return ResponseEntity
+            .created(new URI("/api/artworks/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+
 
     /**
      * 업로드된 이미지 파일을 처리하여 ArtworkDTO에 이미지 URL을 설정합니다.
