@@ -1,5 +1,6 @@
 package com.artbridge.artwork.service.impl;
 
+import com.artbridge.artwork.adaptor.MemberInPort;
 import com.artbridge.artwork.adaptor.MemberOutPort;
 import com.artbridge.artwork.domain.Artwork;
 import com.artbridge.artwork.domain.enumeration.Status;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ArtworkServiceImpl implements ArtworkService {
+public class ArtworkServiceImpl implements ArtworkService, MemberInPort {
 
     private final Logger log = LoggerFactory.getLogger(ArtworkServiceImpl.class);
 
@@ -138,5 +139,14 @@ public class ArtworkServiceImpl implements ArtworkService {
         artwork.setStatus(Status.OK);
         artwork = artworkRepository.save(artwork);
         return artworkMapper.toDto(artwork);
+    }
+
+    @Override
+    public void updateMemberName(Long id, String name) {
+        log.debug("Request to update Artwork : {}", id);
+        artworkRepository.findAllByMemberId(id).forEach(artwork -> {
+            artwork.getMember().setName(name);
+            artworkRepository.save(artwork);
+        });
     }
 }
