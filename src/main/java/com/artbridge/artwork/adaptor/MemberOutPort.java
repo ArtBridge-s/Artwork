@@ -1,6 +1,6 @@
 package com.artbridge.artwork.adaptor;
 
-public interface MemberProducer {
+public interface MemberOutPort {
 
     void requestMemberName(Long id);
 
