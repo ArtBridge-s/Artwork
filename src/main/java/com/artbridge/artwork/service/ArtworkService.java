@@ -110,5 +110,12 @@ public interface ArtworkService {
      */
     ArtworkDTO authorizeOkArtwork(Long id);
 
+
+    /**
+     * 주어진 ArtworkDTO를 저장합니다.
+     *
+     * @param artworkDTO 저장할 ArtworkDTO 객체
+     * @return 저장된 ArtworkDTO 객체
+     */
     ArtworkDTO save(ArtworkDTO artworkDTO);
 }
