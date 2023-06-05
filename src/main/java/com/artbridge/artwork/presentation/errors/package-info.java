@@ -3,4 +3,4 @@
  *
  * More information on https://github.com/zalando/problem-spring-web
  */
-package com.artbridge.artwork.presentation.rest.errors;
+package com.artbridge.artwork.presentation.errors;

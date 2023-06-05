@@ -9,7 +9,7 @@ import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
 import com.artbridge.artwork.application.usecase.ArtworkUsecase;
 import com.artbridge.artwork.application.dto.ArtworkDTO;
 import com.artbridge.artwork.application.dto.MemberDTO;
-import com.artbridge.artwork.presentation.rest.errors.BadRequestAlertException;
+import com.artbridge.artwork.presentation.errors.BadRequestAlertException;
 
 import java.io.IOException;
 import java.net.URI;
