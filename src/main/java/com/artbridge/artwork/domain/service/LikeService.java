@@ -1,7 +1,8 @@
-package com.artbridge.artwork.service;
+package com.artbridge.artwork.domain.service;
 
 import com.artbridge.artwork.domain.model.Like;
-import com.artbridge.artwork.service.dto.LikeDTO;
+import com.artbridge.artwork.domain.service.dto.LikeDTO;
+
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

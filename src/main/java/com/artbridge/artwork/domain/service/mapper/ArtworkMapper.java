@@ -1,7 +1,7 @@
-package com.artbridge.artwork.service.mapper;
+package com.artbridge.artwork.domain.service.mapper;
 
 import com.artbridge.artwork.domain.model.Artwork;
-import com.artbridge.artwork.service.dto.ArtworkDTO;
+import com.artbridge.artwork.domain.service.dto.ArtworkDTO;
 import org.mapstruct.*;
 
 /**

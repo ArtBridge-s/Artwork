@@ -1,7 +1,7 @@
-package com.artbridge.artwork.service;
+package com.artbridge.artwork.domain.service;
 
 import com.artbridge.artwork.domain.model.Comment;
-import com.artbridge.artwork.service.dto.CommentDTO;
+import com.artbridge.artwork.domain.service.dto.CommentDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,13 +1,13 @@
-package com.artbridge.artwork.service.impl;
+package com.artbridge.artwork.domain.service.impl;
 
+import com.artbridge.artwork.domain.service.ArtworkService;
 import com.artbridge.artwork.infrastructure.messaging.MemberInPort;
 import com.artbridge.artwork.infrastructure.messaging.MemberOutPort;
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.domain.standardType.Status;
 import com.artbridge.artwork.infrastructure.repository.ArtworkRepository;
-import com.artbridge.artwork.service.ArtworkService;
-import com.artbridge.artwork.service.dto.ArtworkDTO;
-import com.artbridge.artwork.service.mapper.ArtworkMapper;
+import com.artbridge.artwork.domain.service.dto.ArtworkDTO;
+import com.artbridge.artwork.domain.service.mapper.ArtworkMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
