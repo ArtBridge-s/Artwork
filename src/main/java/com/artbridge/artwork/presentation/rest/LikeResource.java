@@ -7,7 +7,7 @@ import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
 import com.artbridge.artwork.application.usecase.LikeUsecase;
 import com.artbridge.artwork.application.dto.LikeDTO;
 import com.artbridge.artwork.application.dto.MemberDTO;
-import com.artbridge.artwork.presentation.errors.BadRequestAlertException;
+import com.artbridge.artwork.presentation.exception.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

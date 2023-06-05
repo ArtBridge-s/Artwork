@@ -1,4 +1,4 @@
-package com.artbridge.artwork.presentation.errors;
+package com.artbridge.artwork.presentation.exception;
 
 import java.net.URI;
 import java.util.Arrays;
