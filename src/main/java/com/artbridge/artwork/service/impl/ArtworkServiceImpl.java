@@ -4,7 +4,7 @@ import com.artbridge.artwork.adaptor.MemberInPort;
 import com.artbridge.artwork.adaptor.MemberOutPort;
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.domain.standardType.Status;
-import com.artbridge.artwork.repository.ArtworkRepository;
+import com.artbridge.artwork.domain.repository.ArtworkRepository;
 import com.artbridge.artwork.service.ArtworkService;
 import com.artbridge.artwork.service.dto.ArtworkDTO;
 import com.artbridge.artwork.service.mapper.ArtworkMapper;

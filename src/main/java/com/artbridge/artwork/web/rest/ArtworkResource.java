@@ -2,7 +2,7 @@ package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.adaptor.GCSService;
 import com.artbridge.artwork.domain.model.Artwork;
-import com.artbridge.artwork.repository.ArtworkRepository;
+import com.artbridge.artwork.domain.repository.ArtworkRepository;
 import com.artbridge.artwork.security.AuthoritiesConstants;
 import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.security.jwt.TokenProvider;

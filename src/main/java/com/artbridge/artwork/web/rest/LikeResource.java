@@ -1,7 +1,7 @@
 package com.artbridge.artwork.web.rest;
 
 import com.artbridge.artwork.domain.model.Like;
-import com.artbridge.artwork.repository.LikeRepository;
+import com.artbridge.artwork.domain.repository.LikeRepository;
 import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.security.jwt.TokenProvider;
 import com.artbridge.artwork.service.LikeService;

@@ -1,7 +1,7 @@
 package com.artbridge.artwork.service.impl;
 
 import com.artbridge.artwork.domain.model.View;
-import com.artbridge.artwork.repository.ViewRepository;
+import com.artbridge.artwork.domain.repository.ViewRepository;
 import com.artbridge.artwork.service.ViewService;
 import com.artbridge.artwork.service.dto.ViewDTO;
 import com.artbridge.artwork.service.mapper.ViewMapper;

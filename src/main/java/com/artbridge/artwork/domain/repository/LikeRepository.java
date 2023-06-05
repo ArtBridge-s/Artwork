@@ -1,4 +1,4 @@
-package com.artbridge.artwork.repository;
+package com.artbridge.artwork.domain.repository;
 
 import com.artbridge.artwork.domain.model.Like;
 import org.springframework.data.jpa.repository.*;

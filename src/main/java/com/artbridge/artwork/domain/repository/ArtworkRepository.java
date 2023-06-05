@@ -1,4 +1,4 @@
-package com.artbridge.artwork.repository;
+package com.artbridge.artwork.domain.repository;
 
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.domain.standardType.Status;

@@ -1,7 +1,7 @@
 package com.artbridge.artwork.service.impl;
 
 import com.artbridge.artwork.domain.model.Comment;
-import com.artbridge.artwork.repository.CommentRepository;
+import com.artbridge.artwork.domain.repository.CommentRepository;
 import com.artbridge.artwork.service.CommentService;
 import com.artbridge.artwork.service.dto.CommentDTO;
 import com.artbridge.artwork.service.mapper.CommentMapper;
