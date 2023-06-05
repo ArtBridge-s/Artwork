@@ -1,6 +1,6 @@
 package com.artbridge.artwork.infrastructure.configuration;
 
-import com.artbridge.artwork.aop.logging.LoggingAspect;
+import com.artbridge.artwork.infrastructure.aop.logging.LoggingAspect;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import tech.jhipster.config.JHipsterConstants;

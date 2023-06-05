@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.artbridge.artwork.infrastructure.security.jwt.JWTFilter;
 import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
-import com.artbridge.artwork.management.SecurityMetersService;
+import com.artbridge.artwork.infrastructure.management.SecurityMetersService;
 import com.artbridge.artwork.infrastructure.security.AuthoritiesConstants;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

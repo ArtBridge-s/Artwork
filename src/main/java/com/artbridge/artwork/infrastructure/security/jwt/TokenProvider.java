@@ -1,6 +1,6 @@
 package com.artbridge.artwork.infrastructure.security.jwt;
 
-import com.artbridge.artwork.management.SecurityMetersService;
+import com.artbridge.artwork.infrastructure.management.SecurityMetersService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

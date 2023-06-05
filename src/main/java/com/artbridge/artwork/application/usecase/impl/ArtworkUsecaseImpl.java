@@ -2,7 +2,7 @@ package com.artbridge.artwork.application.usecase.impl;
 
 import com.artbridge.artwork.application.usecase.ArtworkUsecase;
 import com.artbridge.artwork.infrastructure.messaging.MemberInPort;
-import com.artbridge.artwork.infrastructure.messaging.MemberOutPort;
+import com.artbridge.artwork.infrastructure.messaging.MemberProducer;
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.domain.standardType.Status;
 import com.artbridge.artwork.infrastructure.repository.ArtworkRepository;
@@ -29,18 +29,18 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
 
     private final ArtworkMapper artworkMapper;
 
-    private final MemberOutPort memberOutPort;
+    private final MemberProducer memberProducer;
 
-    public ArtworkUsecaseImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, MemberOutPort memberOutPort) {
+    public ArtworkUsecaseImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, MemberProducer memberProducer) {
         this.artworkRepository = artworkRepository;
         this.artworkMapper = artworkMapper;
-        this.memberOutPort = memberOutPort;
+        this.memberProducer = memberProducer;
     }
 
     @Override
     public ArtworkDTO saveRequest(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        this.memberOutPort.requestMemberName(artworkDTO.getMember().getId());
+        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
 
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.UPLOAD_PENDING);
@@ -133,7 +133,7 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Override
     public ArtworkDTO save(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        this.memberOutPort.requestMemberName(artworkDTO.getMember().getId());
+        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
 
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.OK);

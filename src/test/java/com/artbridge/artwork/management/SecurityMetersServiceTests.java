@@ -2,6 +2,7 @@ package com.artbridge.artwork.management;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.artbridge.artwork.infrastructure.management.SecurityMetersService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;

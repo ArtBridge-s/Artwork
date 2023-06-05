@@ -1,4 +1,4 @@
-package com.artbridge.artwork.management;
+package com.artbridge.artwork.infrastructure.management;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

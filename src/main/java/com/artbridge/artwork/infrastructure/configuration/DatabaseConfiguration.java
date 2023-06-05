@@ -14,7 +14,7 @@ import tech.jhipster.config.JHipsterConstants;
 import tech.jhipster.config.h2.H2ConfigurationHelper;
 
 @Configuration
-@EnableJpaRepositories({ "com.artbridge.artwork.repository" })
+@EnableJpaRepositories({ "com.artbridge.artwork.infrastructure.repository" })
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {

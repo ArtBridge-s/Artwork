@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class MemberProducerImpl implements MemberOutPort {
+public class MemberProducerImpl implements MemberProducer {
 
     // 토픽명
     private static final String TOPIC_MEMBERNAME = "member-name-request";

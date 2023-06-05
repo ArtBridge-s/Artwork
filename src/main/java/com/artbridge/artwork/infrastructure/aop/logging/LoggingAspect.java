@@ -1,4 +1,4 @@
-package com.artbridge.artwork.aop.logging;
+package com.artbridge.artwork.infrastructure.aop.logging;
 
 import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;
@@ -15,7 +15,6 @@ import tech.jhipster.config.JHipsterConstants;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
- *
  * By default, it only runs with the "dev" profile.
  */
 @Aspect
@@ -43,9 +42,9 @@ public class LoggingAspect {
      * Pointcut that matches all Spring beans in the application's main packages.
      */
     @Pointcut(
-        "within(com.artbridge.artwork.repository..*)" +
-        " || within(com.artbridge.artwork.service..*)" +
-        " || within(com.artbridge.artwork.web.rest..*)"
+        "within(com.artbridge.artwork.infrastructure.repository..*)" +
+        " || within(com.artbridge.artwork.application.usecase..*)" +
+        " || within(com.artbridge.artwork.presentation.rest..*)"
     )
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
