@@ -1,1 +1,1 @@
-org.springframework.test.context.ContextCustomizerFactory = com.artbridge.artwork.config.TestContainersSpringContextCustomizerFactory
+org.springframework.test.context.ContextCustomizerFactory = com.artbridge.artwork.configuration.TestContainersSpringContextCustomizerFactory

@@ -1,9 +1,8 @@
 package com.artbridge.artwork;
 
-import com.artbridge.artwork.ArtworkApp;
-import com.artbridge.artwork.config.AsyncSyncConfiguration;
-import com.artbridge.artwork.config.EmbeddedKafka;
-import com.artbridge.artwork.config.EmbeddedSQL;
+import com.artbridge.artwork.configuration.AsyncSyncConfiguration;
+import com.artbridge.artwork.configuration.EmbeddedKafka;
+import com.artbridge.artwork.configuration.EmbeddedSQL;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

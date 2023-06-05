@@ -7,9 +7,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.artbridge.artwork.IntegrationTest;
-import com.artbridge.artwork.config.EmbeddedKafka;
-import com.artbridge.artwork.config.KafkaSseConsumer;
-import com.artbridge.artwork.config.KafkaSseProducer;
+import com.artbridge.artwork.configuration.EmbeddedKafka;
+import com.artbridge.artwork.infrastructure.configuration.KafkaSseConsumer;
+import com.artbridge.artwork.infrastructure.configuration.KafkaSseProducer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;

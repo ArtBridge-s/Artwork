@@ -1,6 +1,6 @@
 package com.artbridge.artwork.infrastructure.feign;
 
-import com.artbridge.artwork.security.SecurityUtils;
+import com.artbridge.artwork.infrastructure.security.SecurityUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,7 @@
 package com.artbridge.artwork.web.rest;
 
+import com.artbridge.artwork.presentation.rest.LikeResource;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 
