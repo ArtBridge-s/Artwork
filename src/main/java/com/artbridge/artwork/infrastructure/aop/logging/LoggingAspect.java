@@ -43,9 +43,9 @@ public class LoggingAspect {
      * Pointcut that matches all Spring beans in the application's main packages.
      */
     @Pointcut(
-        "within(com.artbridge.artwork.repository..*)" +
-        " || within(com.artbridge.artwork.service..*)" +
-        " || within(com.artbridge.artwork.web.rest..*)"
+        "within(com.artbridge.artwork.infrastructure.repository..*)" +
+        " || within(com.artbridge.artwork.application.usecase..*)" +
+        " || within(com.artbridge.artwork.presentation.rest..*)"
     )
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
