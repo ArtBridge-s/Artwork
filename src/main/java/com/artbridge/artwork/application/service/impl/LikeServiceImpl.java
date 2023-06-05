@@ -1,10 +1,10 @@
-package com.artbridge.artwork.domain.service.impl;
+package com.artbridge.artwork.application.service.impl;
 
+import com.artbridge.artwork.application.service.LikeService;
+import com.artbridge.artwork.application.service.dto.LikeDTO;
 import com.artbridge.artwork.domain.model.Like;
-import com.artbridge.artwork.domain.service.LikeService;
-import com.artbridge.artwork.domain.service.dto.LikeDTO;
 import com.artbridge.artwork.infrastructure.repository.LikeRepository;
-import com.artbridge.artwork.domain.service.mapper.LikeMapper;
+import com.artbridge.artwork.application.service.mapper.LikeMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

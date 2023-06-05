@@ -1,10 +1,10 @@
-package com.artbridge.artwork.domain.service.impl;
+package com.artbridge.artwork.application.service.impl;
 
+import com.artbridge.artwork.application.service.CommentService;
 import com.artbridge.artwork.domain.model.Comment;
-import com.artbridge.artwork.domain.service.CommentService;
 import com.artbridge.artwork.infrastructure.repository.CommentRepository;
-import com.artbridge.artwork.domain.service.dto.CommentDTO;
-import com.artbridge.artwork.domain.service.mapper.CommentMapper;
+import com.artbridge.artwork.application.service.dto.CommentDTO;
+import com.artbridge.artwork.application.service.mapper.CommentMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
