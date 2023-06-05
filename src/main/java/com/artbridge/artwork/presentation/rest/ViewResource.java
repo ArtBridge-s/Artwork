@@ -4,7 +4,7 @@ import com.artbridge.artwork.domain.model.View;
 import com.artbridge.artwork.infrastructure.repository.ViewRepository;
 import com.artbridge.artwork.presentation.rest.errors.BadRequestAlertException;
 import com.artbridge.artwork.application.service.ViewService;
-import com.artbridge.artwork.application.service.dto.ViewDTO;
+import com.artbridge.artwork.application.dto.ViewDTO;
 
 import java.net.URI;
 import java.net.URISyntaxException;

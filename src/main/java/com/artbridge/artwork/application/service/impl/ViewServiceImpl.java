@@ -1,10 +1,10 @@
 package com.artbridge.artwork.application.service.impl;
 
 import com.artbridge.artwork.application.service.ViewService;
-import com.artbridge.artwork.application.service.mapper.ViewMapper;
+import com.artbridge.artwork.application.mapper.ViewMapper;
 import com.artbridge.artwork.domain.model.View;
 import com.artbridge.artwork.infrastructure.repository.ViewRepository;
-import com.artbridge.artwork.application.service.dto.ViewDTO;
+import com.artbridge.artwork.application.dto.ViewDTO;
 
 import java.util.Optional;
 import org.slf4j.Logger;

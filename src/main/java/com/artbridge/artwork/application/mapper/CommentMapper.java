@@ -1,6 +1,6 @@
-package com.artbridge.artwork.application.service.mapper;
+package com.artbridge.artwork.application.mapper;
 
-import com.artbridge.artwork.application.service.dto.CommentDTO;
+import com.artbridge.artwork.application.dto.CommentDTO;
 import com.artbridge.artwork.domain.model.Comment;
 import org.mapstruct.*;
 

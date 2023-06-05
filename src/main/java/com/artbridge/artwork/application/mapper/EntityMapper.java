@@ -1,4 +1,4 @@
-package com.artbridge.artwork.application.service.mapper;
+package com.artbridge.artwork.application.mapper;
 
 import java.util.List;
 import org.mapstruct.BeanMapping;

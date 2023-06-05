@@ -1,4 +1,4 @@
-package com.artbridge.artwork.application.service.dto;
+package com.artbridge.artwork.application.dto;
 
 import java.io.Serializable;
 

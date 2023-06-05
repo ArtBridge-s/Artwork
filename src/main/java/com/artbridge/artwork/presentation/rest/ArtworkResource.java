@@ -7,8 +7,8 @@ import com.artbridge.artwork.infrastructure.security.AuthoritiesConstants;
 import com.artbridge.artwork.infrastructure.security.SecurityUtils;
 import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
 import com.artbridge.artwork.application.service.ArtworkService;
-import com.artbridge.artwork.application.service.dto.ArtworkDTO;
-import com.artbridge.artwork.application.service.dto.MemberDTO;
+import com.artbridge.artwork.application.dto.ArtworkDTO;
+import com.artbridge.artwork.application.dto.MemberDTO;
 import com.artbridge.artwork.presentation.rest.errors.BadRequestAlertException;
 
 import java.io.IOException;
