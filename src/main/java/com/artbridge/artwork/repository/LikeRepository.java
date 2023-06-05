@@ -1,6 +1,6 @@
 package com.artbridge.artwork.repository;
 
-import com.artbridge.artwork.domain.Like;
+import com.artbridge.artwork.domain.model.Like;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

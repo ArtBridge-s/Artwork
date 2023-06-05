@@ -1,6 +1,6 @@
 package com.artbridge.artwork.repository;
 
-import com.artbridge.artwork.domain.View;
+import com.artbridge.artwork.domain.model.View;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

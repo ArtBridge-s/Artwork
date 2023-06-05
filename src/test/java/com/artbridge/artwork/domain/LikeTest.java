@@ -2,6 +2,7 @@ package com.artbridge.artwork.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.artbridge.artwork.domain.model.Like;
 import com.artbridge.artwork.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 

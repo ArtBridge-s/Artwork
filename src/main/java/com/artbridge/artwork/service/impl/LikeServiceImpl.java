@@ -1,6 +1,6 @@
 package com.artbridge.artwork.service.impl;
 
-import com.artbridge.artwork.domain.Like;
+import com.artbridge.artwork.domain.model.Like;
 import com.artbridge.artwork.repository.LikeRepository;
 import com.artbridge.artwork.service.LikeService;
 import com.artbridge.artwork.service.dto.LikeDTO;

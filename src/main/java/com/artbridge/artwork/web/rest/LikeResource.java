@@ -1,5 +1,6 @@
 package com.artbridge.artwork.web.rest;
 
+import com.artbridge.artwork.domain.model.Like;
 import com.artbridge.artwork.repository.LikeRepository;
 import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.security.jwt.TokenProvider;
@@ -27,7 +28,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.artbridge.artwork.domain.Like}.
+ * REST controller for managing {@link Like}.
  */
 @RestController
 @RequestMapping("/api/likes")

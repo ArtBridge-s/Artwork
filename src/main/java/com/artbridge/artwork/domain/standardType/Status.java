@@ -1,4 +1,4 @@
-package com.artbridge.artwork.domain.enumeration;
+package com.artbridge.artwork.domain.standardType;
 
 /**
  * The Status enumeration.

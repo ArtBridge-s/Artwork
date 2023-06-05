@@ -1,5 +1,6 @@
 package com.artbridge.artwork.web.rest;
 
+import com.artbridge.artwork.domain.model.Comment;
 import com.artbridge.artwork.repository.CommentRepository;
 import com.artbridge.artwork.security.SecurityUtils;
 import com.artbridge.artwork.security.jwt.TokenProvider;
@@ -28,7 +29,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.artbridge.artwork.domain.Comment}.
+ * REST controller for managing {@link Comment}.
  */
 @RestController
 @RequestMapping("/api/comments")

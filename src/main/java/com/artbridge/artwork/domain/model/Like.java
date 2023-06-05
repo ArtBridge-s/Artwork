@@ -1,6 +1,6 @@
-package com.artbridge.artwork.domain;
+package com.artbridge.artwork.domain.model;
 
-import com.artbridge.artwork.domain.valueobject.Member;
+import com.artbridge.artwork.domain.vo.Member;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;

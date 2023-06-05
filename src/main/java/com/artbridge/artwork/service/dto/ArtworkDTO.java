@@ -1,11 +1,13 @@
 package com.artbridge.artwork.service.dto;
 
-import com.artbridge.artwork.domain.enumeration.Status;
+import com.artbridge.artwork.domain.standardType.Status;
 import java.io.Serializable;
+
+import com.artbridge.artwork.domain.model.Artwork;
 import lombok.Data;
 
 /**
- * A DTO for the {@link com.artbridge.artwork.domain.Artwork} entity.
+ * A DTO for the {@link Artwork} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 @Data

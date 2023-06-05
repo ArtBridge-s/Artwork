@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.artbridge.artwork.IntegrationTest;
-import com.artbridge.artwork.domain.View;
+import com.artbridge.artwork.domain.model.View;
 import com.artbridge.artwork.repository.ViewRepository;
 import com.artbridge.artwork.service.dto.ViewDTO;
 import com.artbridge.artwork.service.mapper.ViewMapper;

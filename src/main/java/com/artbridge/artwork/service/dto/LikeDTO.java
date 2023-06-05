@@ -2,10 +2,11 @@ package com.artbridge.artwork.service.dto;
 
 import java.io.Serializable;
 
+import com.artbridge.artwork.domain.model.Like;
 import lombok.Data;
 
 /**
- * A DTO for the {@link com.artbridge.artwork.domain.Like} entity.
+ * A DTO for the {@link Like} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 @Data

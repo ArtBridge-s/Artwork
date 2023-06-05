@@ -1,5 +1,6 @@
 package com.artbridge.artwork.web.rest;
 
+import com.artbridge.artwork.domain.model.View;
 import com.artbridge.artwork.repository.ViewRepository;
 import com.artbridge.artwork.service.ViewService;
 import com.artbridge.artwork.service.dto.ViewDTO;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,7 +24,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.artbridge.artwork.domain.View}.
+ * REST controller for managing {@link View}.
  */
 @RestController
 @RequestMapping("/api")

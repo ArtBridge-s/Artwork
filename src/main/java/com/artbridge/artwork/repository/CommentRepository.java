@@ -1,6 +1,6 @@
 package com.artbridge.artwork.repository;
 
-import com.artbridge.artwork.domain.Comment;
+import com.artbridge.artwork.domain.model.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
