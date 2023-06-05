@@ -6,11 +6,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.artbridge.artwork.IntegrationTest;
-import com.artbridge.artwork.domain.Artwork;
-import com.artbridge.artwork.domain.enumeration.Status;
-import com.artbridge.artwork.repository.ArtworkRepository;
-import com.artbridge.artwork.service.dto.ArtworkDTO;
-import com.artbridge.artwork.service.mapper.ArtworkMapper;
+import com.artbridge.artwork.domain.model.Artwork;
+import com.artbridge.artwork.domain.standardType.Status;
+import com.artbridge.artwork.infrastructure.repository.ArtworkRepository;
+import com.artbridge.artwork.presentation.rest.ArtworkResource;
+import com.artbridge.artwork.application.dto.ArtworkDTO;
+import com.artbridge.artwork.application.mapper.ArtworkMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;

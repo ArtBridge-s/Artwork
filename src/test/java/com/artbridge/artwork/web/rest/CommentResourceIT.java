@@ -6,10 +6,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.artbridge.artwork.IntegrationTest;
-import com.artbridge.artwork.domain.Comment;
-import com.artbridge.artwork.repository.CommentRepository;
-import com.artbridge.artwork.service.dto.CommentDTO;
-import com.artbridge.artwork.service.mapper.CommentMapper;
+import com.artbridge.artwork.domain.model.Comment;
+import com.artbridge.artwork.infrastructure.repository.CommentRepository;
+import com.artbridge.artwork.presentation.rest.CommentResource;
+import com.artbridge.artwork.application.dto.CommentDTO;
+import com.artbridge.artwork.application.mapper.CommentMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;

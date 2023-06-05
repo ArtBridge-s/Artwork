@@ -2,8 +2,9 @@ package com.artbridge.artwork.security.jwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
 import com.artbridge.artwork.management.SecurityMetersService;
-import com.artbridge.artwork.security.AuthoritiesConstants;
+import com.artbridge.artwork.infrastructure.security.AuthoritiesConstants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;

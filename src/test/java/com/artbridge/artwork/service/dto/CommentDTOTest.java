@@ -2,6 +2,7 @@ package com.artbridge.artwork.service.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.artbridge.artwork.application.dto.CommentDTO;
 import com.artbridge.artwork.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
