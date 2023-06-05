@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.artbridge.artwork.IntegrationTest;
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.domain.standardType.Status;
-import com.artbridge.artwork.domain.repository.ArtworkRepository;
+import com.artbridge.artwork.infrastructure.repository.ArtworkRepository;
 import com.artbridge.artwork.service.dto.ArtworkDTO;
 import com.artbridge.artwork.service.mapper.ArtworkMapper;
 import java.util.List;

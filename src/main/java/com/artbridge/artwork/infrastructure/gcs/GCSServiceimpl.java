@@ -1,4 +1,4 @@
-package com.artbridge.artwork.adaptor;
+package com.artbridge.artwork.infrastructure.gcs;
 
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;

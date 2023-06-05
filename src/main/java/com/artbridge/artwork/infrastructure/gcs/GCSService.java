@@ -1,4 +1,4 @@
-package com.artbridge.artwork.adaptor;
+package com.artbridge.artwork.infrastructure.gcs;
 
 import org.springframework.web.multipart.MultipartFile;
 

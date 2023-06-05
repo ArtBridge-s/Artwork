@@ -1,4 +1,4 @@
-package com.artbridge.artwork.domain.repository;
+package com.artbridge.artwork.infrastructure.repository;
 
 import com.artbridge.artwork.domain.model.View;
 import org.springframework.data.jpa.repository.*;

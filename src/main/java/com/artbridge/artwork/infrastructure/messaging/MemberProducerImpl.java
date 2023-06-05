@@ -1,4 +1,4 @@
-package com.artbridge.artwork.adaptor;
+package com.artbridge.artwork.infrastructure.messaging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

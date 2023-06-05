@@ -1,4 +1,4 @@
-package com.artbridge.artwork.adaptor;
+package com.artbridge.artwork.infrastructure.messaging;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

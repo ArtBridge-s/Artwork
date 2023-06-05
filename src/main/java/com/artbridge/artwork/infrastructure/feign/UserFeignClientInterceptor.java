@@ -1,4 +1,4 @@
-package com.artbridge.artwork.client;
+package com.artbridge.artwork.infrastructure.feign;
 
 import com.artbridge.artwork.security.SecurityUtils;
 import feign.RequestInterceptor;

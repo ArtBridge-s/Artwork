@@ -1,4 +1,4 @@
-package com.artbridge.artwork.adaptor;
+package com.artbridge.artwork.infrastructure.messaging;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
