@@ -1,6 +1,6 @@
 package com.artbridge.artwork.infrastructure.messaging;
 
-public interface MemberOutPort {
+public interface MemberProducer {
 
     void requestMemberName(Long id);
 
