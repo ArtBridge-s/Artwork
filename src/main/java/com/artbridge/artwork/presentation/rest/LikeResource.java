@@ -4,7 +4,7 @@ import com.artbridge.artwork.domain.model.Like;
 import com.artbridge.artwork.infrastructure.repository.LikeRepository;
 import com.artbridge.artwork.infrastructure.security.SecurityUtils;
 import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
-import com.artbridge.artwork.application.service.LikeService;
+import com.artbridge.artwork.application.usecase.LikeUsecase;
 import com.artbridge.artwork.application.dto.LikeDTO;
 import com.artbridge.artwork.application.dto.MemberDTO;
 import com.artbridge.artwork.presentation.rest.errors.BadRequestAlertException;
@@ -41,15 +41,15 @@ public class LikeResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final LikeService likeService;
+    private final LikeUsecase likeUsecase;
 
     private final LikeRepository likeRepository;
 
     private final TokenProvider tokenProvider;
 
 
-    public LikeResource(LikeService likeService, LikeRepository likeRepository, TokenProvider tokenProvider) {
-        this.likeService = likeService;
+    public LikeResource(LikeUsecase likeUsecase, LikeRepository likeRepository, TokenProvider tokenProvider) {
+        this.likeUsecase = likeUsecase;
         this.likeRepository = likeRepository;
         this.tokenProvider = tokenProvider;
     }
@@ -81,7 +81,7 @@ public class LikeResource {
 
         likeDTO.setMember(memberDTO);
 
-        LikeDTO result = likeService.save(likeDTO);
+        LikeDTO result = likeUsecase.save(likeDTO);
         return ResponseEntity
             .created(new URI("/api/likes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -104,7 +104,7 @@ public class LikeResource {
         log.debug("REST request to update Like : {}, {}", id, likeDTO);
         this.validateLike(id, likeDTO);
 
-        LikeDTO result = likeService.update(likeDTO);
+        LikeDTO result = likeUsecase.update(likeDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, likeDTO.getId().toString()))
@@ -128,7 +128,7 @@ public class LikeResource {
         log.debug("REST request to partial update Like partially : {}, {}", id, likeDTO);
         this.validateLike(id, likeDTO);
 
-        Optional<LikeDTO> result = likeService.partialUpdate(likeDTO);
+        Optional<LikeDTO> result = likeUsecase.partialUpdate(likeDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -146,7 +146,7 @@ public class LikeResource {
     @GetMapping
     public ResponseEntity<List<LikeDTO>> getAllLikes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Likes");
-        Page<LikeDTO> page = likeService.findAll(pageable);
+        Page<LikeDTO> page = likeUsecase.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -162,7 +162,7 @@ public class LikeResource {
     @GetMapping("/{id}")
     public ResponseEntity<LikeDTO> getLike(@PathVariable Long id) {
         log.debug("REST request to get Like : {}", id);
-        Optional<LikeDTO> likeDTO = likeService.findOne(id);
+        Optional<LikeDTO> likeDTO = likeUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(likeDTO);
     }
 
@@ -180,7 +180,7 @@ public class LikeResource {
         String token = this.validateAndGetToken();
         MemberDTO memberDTO = this.createMember(token);
 
-        likeService.delete(artworkId, memberDTO.getId());
+        likeUsecase.delete(artworkId, memberDTO.getId());
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, artworkId.toString()))
@@ -198,7 +198,7 @@ public class LikeResource {
     @GetMapping("/counts")
     public ResponseEntity<Long> getLikeCount(@RequestParam Long artworkId) {
         log.debug("REST request to get Like Count : {}", artworkId);
-        Long count = likeService.countByArtworkId(artworkId);
+        Long count = likeUsecase.countByArtworkId(artworkId);
         return ResponseEntity.ok().body(count);
     }
 

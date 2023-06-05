@@ -6,7 +6,7 @@ import com.artbridge.artwork.infrastructure.repository.ArtworkRepository;
 import com.artbridge.artwork.infrastructure.security.AuthoritiesConstants;
 import com.artbridge.artwork.infrastructure.security.SecurityUtils;
 import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
-import com.artbridge.artwork.application.service.ArtworkService;
+import com.artbridge.artwork.application.usecase.ArtworkUsecase;
 import com.artbridge.artwork.application.dto.ArtworkDTO;
 import com.artbridge.artwork.application.dto.MemberDTO;
 import com.artbridge.artwork.presentation.rest.errors.BadRequestAlertException;
@@ -51,7 +51,7 @@ public class ArtworkResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ArtworkService artworkService;
+    private final ArtworkUsecase artworkUsecase;
 
     private final ArtworkRepository artworkRepository;
 
@@ -59,8 +59,8 @@ public class ArtworkResource {
 
     private final GCSService gcsService;
 
-    public ArtworkResource(ArtworkService artworkService, ArtworkRepository artworkRepository, TokenProvider tokenProvider, GCSService gcsService) {
-        this.artworkService = artworkService;
+    public ArtworkResource(ArtworkUsecase artworkUsecase, ArtworkRepository artworkRepository, TokenProvider tokenProvider, GCSService gcsService) {
+        this.artworkUsecase = artworkUsecase;
         this.artworkRepository = artworkRepository;
         this.tokenProvider = tokenProvider;
         this.gcsService = gcsService;
@@ -90,7 +90,7 @@ public class ArtworkResource {
 
         this.uploadImage(file, artworkDTO);
 
-        ArtworkDTO result = this.artworkService.saveRequest(artworkDTO);
+        ArtworkDTO result = this.artworkUsecase.saveRequest(artworkDTO);
         return ResponseEntity
             .created(new URI("/api/artworks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -108,7 +108,7 @@ public class ArtworkResource {
     @GetMapping
     public ResponseEntity<List<ArtworkDTO>> getAllArtworks(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findAll(pageable);
+        Page<ArtworkDTO> page = artworkUsecase.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -124,7 +124,7 @@ public class ArtworkResource {
     @GetMapping("/{id}")
     public ResponseEntity<ArtworkDTO> getArtwork(@PathVariable Long id) {
         log.debug("REST request to get Artwork : {}", id);
-        Optional<ArtworkDTO> artworkDTO = artworkService.findOne(id);
+        Optional<ArtworkDTO> artworkDTO = artworkUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(artworkDTO);
     }
 
@@ -143,7 +143,7 @@ public class ArtworkResource {
         this.validateId(id, artworkDTO);
         this.validateArtworkExists(id);
 
-        ArtworkDTO result = artworkService.update(artworkDTO);
+        ArtworkDTO result = artworkUsecase.update(artworkDTO);
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, artworkDTO.getId().toString())).body(result);
     }
@@ -167,7 +167,7 @@ public class ArtworkResource {
         Artwork artwork = this.validateArtworkExists(id);
         this.validateOwnership(artwork);
 
-        Optional<ArtworkDTO> result = artworkService.partialUpdate(artworkDTO);
+        Optional<ArtworkDTO> result = artworkUsecase.partialUpdate(artworkDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -195,7 +195,7 @@ public class ArtworkResource {
 
         this.validateArtworkExists(id);
 
-        ArtworkDTO result = artworkService.authorizeOkArtwork(id);
+        ArtworkDTO result = artworkUsecase.authorizeOkArtwork(id);
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString())).body(result);
     }
@@ -217,11 +217,11 @@ public class ArtworkResource {
         this.validateArtworkExists(id);
 
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
-            artworkService.delete(id);
+            artworkUsecase.delete(id);
             return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
         }
 
-        ArtworkDTO result = artworkService.deletePending(artworkDTO);
+        ArtworkDTO result = artworkUsecase.deletePending(artworkDTO);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
     }
 
@@ -240,7 +240,7 @@ public class ArtworkResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<ArtworkDTO>> getCreatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findCreatePendings(pageable);
+        Page<ArtworkDTO> page = artworkUsecase.findCreatePendings(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -257,7 +257,7 @@ public class ArtworkResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<ArtworkDTO>> getUpdatePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findUpdatePendings(pageable);
+        Page<ArtworkDTO> page = artworkUsecase.findUpdatePendings(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -273,7 +273,7 @@ public class ArtworkResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<ArtworkDTO>> getDeletePendings(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Artworks");
-        Page<ArtworkDTO> page = artworkService.findDeletePendings(pageable);
+        Page<ArtworkDTO> page = artworkUsecase.findDeletePendings(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -302,7 +302,7 @@ public class ArtworkResource {
 
         this.uploadImage(file, artworkDTO);
 
-        ArtworkDTO result = this.artworkService.save(artworkDTO);
+        ArtworkDTO result = this.artworkUsecase.save(artworkDTO);
         return ResponseEntity
             .created(new URI("/api/artworks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(this.applicationName, true, ENTITY_NAME, result.getId().toString()))

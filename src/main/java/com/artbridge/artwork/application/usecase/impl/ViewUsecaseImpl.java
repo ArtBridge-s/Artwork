@@ -1,6 +1,6 @@
-package com.artbridge.artwork.application.service.impl;
+package com.artbridge.artwork.application.usecase.impl;
 
-import com.artbridge.artwork.application.service.ViewService;
+import com.artbridge.artwork.application.usecase.ViewUsecase;
 import com.artbridge.artwork.application.mapper.ViewMapper;
 import com.artbridge.artwork.domain.model.View;
 import com.artbridge.artwork.infrastructure.repository.ViewRepository;
@@ -19,15 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ViewServiceImpl implements ViewService {
+public class ViewUsecaseImpl implements ViewUsecase {
 
-    private final Logger log = LoggerFactory.getLogger(ViewServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ViewUsecaseImpl.class);
 
     private final ViewRepository viewRepository;
 
     private final ViewMapper viewMapper;
 
-    public ViewServiceImpl(ViewRepository viewRepository, ViewMapper viewMapper) {
+    public ViewUsecaseImpl(ViewRepository viewRepository, ViewMapper viewMapper) {
         this.viewRepository = viewRepository;
         this.viewMapper = viewMapper;
     }

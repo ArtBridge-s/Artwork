@@ -4,7 +4,7 @@ import com.artbridge.artwork.domain.model.Comment;
 import com.artbridge.artwork.infrastructure.repository.CommentRepository;
 import com.artbridge.artwork.infrastructure.security.SecurityUtils;
 import com.artbridge.artwork.infrastructure.security.jwt.TokenProvider;
-import com.artbridge.artwork.application.service.CommentService;
+import com.artbridge.artwork.application.usecase.CommentUsecase;
 import com.artbridge.artwork.application.dto.CommentDTO;
 import com.artbridge.artwork.application.dto.MemberDTO;
 import com.artbridge.artwork.presentation.rest.errors.BadRequestAlertException;
@@ -42,14 +42,14 @@ public class CommentResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final CommentService commentService;
+    private final CommentUsecase commentUsecase;
 
     private final CommentRepository commentRepository;
 
     private final TokenProvider tokenProvider;
 
-    public CommentResource(CommentService commentService, CommentRepository commentRepository, TokenProvider tokenProvider) {
-        this.commentService = commentService;
+    public CommentResource(CommentUsecase commentUsecase, CommentRepository commentRepository, TokenProvider tokenProvider) {
+        this.commentUsecase = commentUsecase;
         this.commentRepository = commentRepository;
         this.tokenProvider = tokenProvider;
     }
@@ -74,7 +74,7 @@ public class CommentResource {
         MemberDTO memberDTO = this.createMember(token);
         commentDTO.setMember(memberDTO);
 
-        CommentDTO result = commentService.save(commentDTO);
+        CommentDTO result = commentUsecase.save(commentDTO);
         return ResponseEntity
             .created(new URI("/api/comments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -104,7 +104,7 @@ public class CommentResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        CommentDTO result = commentService.update(commentDTO);
+        CommentDTO result = commentUsecase.update(commentDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, commentDTO.getId().toString()))
@@ -135,7 +135,7 @@ public class CommentResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<CommentDTO> result = commentService.partialUpdate(commentDTO);
+        Optional<CommentDTO> result = commentUsecase.partialUpdate(commentDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -158,7 +158,7 @@ public class CommentResource {
             return ResponseEntity.ok().body(new ArrayList<>());
         }
 
-        Page<CommentDTO> page = commentService.findByArtwokId(pageable, artworkId);
+        Page<CommentDTO> page = commentUsecase.findByArtwokId(pageable, artworkId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -172,7 +172,7 @@ public class CommentResource {
     @GetMapping("/{id}")
     public ResponseEntity<CommentDTO> getComment(@PathVariable Long id) {
         log.debug("REST request to get Comment : {}", id);
-        Optional<CommentDTO> commentDTO = commentService.findOne(id);
+        Optional<CommentDTO> commentDTO = commentUsecase.findOne(id);
         return ResponseUtil.wrapOrNotFound(commentDTO);
     }
 
@@ -185,7 +185,7 @@ public class CommentResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         log.debug("REST request to delete Comment : {}", id);
-        commentService.delete(id);
+        commentUsecase.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

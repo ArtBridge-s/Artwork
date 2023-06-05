@@ -1,6 +1,6 @@
-package com.artbridge.artwork.application.service.impl;
+package com.artbridge.artwork.application.usecase.impl;
 
-import com.artbridge.artwork.application.service.CommentService;
+import com.artbridge.artwork.application.usecase.CommentUsecase;
 import com.artbridge.artwork.domain.model.Comment;
 import com.artbridge.artwork.infrastructure.repository.CommentRepository;
 import com.artbridge.artwork.application.dto.CommentDTO;
@@ -18,15 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class CommentServiceImpl implements CommentService {
+public class CommentUsecaseImpl implements CommentUsecase {
 
-    private final Logger log = LoggerFactory.getLogger(CommentServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(CommentUsecaseImpl.class);
 
     private final CommentRepository commentRepository;
 
     private final CommentMapper commentMapper;
 
-    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper) {
+    public CommentUsecaseImpl(CommentRepository commentRepository, CommentMapper commentMapper) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
     }

@@ -1,6 +1,6 @@
-package com.artbridge.artwork.application.service.impl;
+package com.artbridge.artwork.application.usecase.impl;
 
-import com.artbridge.artwork.application.service.ArtworkService;
+import com.artbridge.artwork.application.usecase.ArtworkUsecase;
 import com.artbridge.artwork.infrastructure.messaging.MemberInPort;
 import com.artbridge.artwork.infrastructure.messaging.MemberOutPort;
 import com.artbridge.artwork.domain.model.Artwork;
@@ -21,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ArtworkServiceImpl implements ArtworkService, MemberInPort {
+public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
 
-    private final Logger log = LoggerFactory.getLogger(ArtworkServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ArtworkUsecaseImpl.class);
 
     private final ArtworkRepository artworkRepository;
 
@@ -31,7 +31,7 @@ public class ArtworkServiceImpl implements ArtworkService, MemberInPort {
 
     private final MemberOutPort memberOutPort;
 
-    public ArtworkServiceImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, MemberOutPort memberOutPort) {
+    public ArtworkUsecaseImpl(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, MemberOutPort memberOutPort) {
         this.artworkRepository = artworkRepository;
         this.artworkMapper = artworkMapper;
         this.memberOutPort = memberOutPort;

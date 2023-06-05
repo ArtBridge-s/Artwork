@@ -1,4 +1,4 @@
-package com.artbridge.artwork.application.service;
+package com.artbridge.artwork.application.usecase;
 
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.application.dto.ArtworkDTO;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * Service Interface for managing {@link Artwork}.
  */
-public interface ArtworkService {
+public interface ArtworkUsecase {
     /**
      * 주어진 ArtworkDTO를 저장 요청 합니다.
      *
