@@ -1,4 +1,4 @@
-package com.artbridge.artwork.aop.logging;
+package com.artbridge.artwork.infrastructure.aop.logging;
 
 import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;
