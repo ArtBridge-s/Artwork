@@ -40,7 +40,7 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Override
     public ArtworkDTO saveRequest(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
+//        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
 
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.UPLOAD_PENDING);
@@ -133,7 +133,7 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Override
     public ArtworkDTO save(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
+//        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
 
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
         artwork.setStatus(Status.OK);
