@@ -38,7 +38,7 @@ public class MemberConsumer {
             throw new RuntimeException(e);
         }
 
-        memberInPort.updateMemberName(Long.parseLong(map.get("id").toString()), map.get("name").toString());
+//        memberInPort.updateMemberName(Long.parseLong(map.get("id").toString()), map.get("name").toString());
         log.info("MemberConsumer: {}", map.get("id"), map.get("name").toString());
     }
 }
