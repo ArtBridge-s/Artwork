@@ -17,6 +17,10 @@
 ---
 # Conditionally disable springdoc on missing api-docs profile
 spring:
+  servlet:
+    multipart:
+      max-request-size: 1000MB
+      max-file-size: 1000MB
   config:
     activate:
       on-profile: 'api-docs'
