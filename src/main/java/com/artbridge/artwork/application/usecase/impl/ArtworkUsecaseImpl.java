@@ -76,7 +76,7 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Transactional(readOnly = true)
     public Page<ArtworkDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Artworks");
-        return artworkRepository.findAllByStatus(Status.OK, pageable).map(artworkMapper::toDto);
+        return artworkRepository.findAllByStatusOrderByIdDesc(Status.OK, pageable).map(artworkMapper::toDto);
     }
 
     @Override
@@ -95,19 +95,19 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Override
     public Page<ArtworkDTO> findCreatePendings(Pageable pageable) {
         log.debug("Request to get all Artworks");
-        return artworkRepository.findAllByStatus(Status.UPLOAD_PENDING, pageable).map(artworkMapper::toDto);
+        return artworkRepository.findAllByStatusOrderByIdDesc(Status.UPLOAD_PENDING, pageable).map(artworkMapper::toDto);
     }
 
     @Override
     public Page<ArtworkDTO> findUpdatePendings(Pageable pageable) {
         log.debug("Request to get all Artworks");
-        return artworkRepository.findAllByStatus(Status.REVISION_PENDING, pageable).map(artworkMapper::toDto);
+        return artworkRepository.findAllByStatusOrderByIdDesc(Status.REVISION_PENDING, pageable).map(artworkMapper::toDto);
     }
 
     @Override
     public Page<ArtworkDTO> findDeletePendings(Pageable pageable) {
         log.debug("Request to get all Artworks");
-        return artworkRepository.findAllByStatus(Status.DELETE_PENDING, pageable).map(artworkMapper::toDto);
+        return artworkRepository.findAllByStatusOrderByIdDesc(Status.DELETE_PENDING, pageable).map(artworkMapper::toDto);
     }
 
     @Override
