@@ -33,8 +33,6 @@ public class Comment implements Serializable {
     private Long id;
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "member_id"))
-    @AttributeOverride(name = "name", column = @Column(name = "member_name"))
     private Member member;
 
     @Column(name = "content")
