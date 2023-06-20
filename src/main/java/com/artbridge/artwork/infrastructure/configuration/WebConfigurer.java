@@ -4,7 +4,6 @@ import javax.servlet.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -20,7 +19,6 @@ import tech.jhipster.config.h2.H2ConfigurationHelper;
 /**
  * Configuration of web application with Servlet 3.0 APIs.
  */
-@EnableBinding({ KafkaSseConsumer.class, KafkaSseProducer.class })
 @Configuration
 public class WebConfigurer implements ServletContextInitializer {
 

@@ -79,4 +79,11 @@ public class Comment implements Serializable {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    public void setMemberName(String name) {
+        if (this.member == null) {
+            return;
+        }
+        this.member.setName(name);
+    }
 }

@@ -1,7 +1,6 @@
 package com.artbridge.artwork.application.usecase.impl;
 
 import com.artbridge.artwork.application.usecase.ArtworkUsecase;
-import com.artbridge.artwork.infrastructure.messaging.MemberInPort;
 import com.artbridge.artwork.infrastructure.messaging.MemberProducer;
 import com.artbridge.artwork.domain.model.Artwork;
 import com.artbridge.artwork.domain.standardType.Status;
@@ -21,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
+public class ArtworkUsecaseImpl implements ArtworkUsecase {
 
     private final Logger log = LoggerFactory.getLogger(ArtworkUsecaseImpl.class);
 
@@ -40,9 +39,9 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Override
     public ArtworkDTO saveRequest(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-//        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
 
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
+        memberProducer.requestMemberName(artwork.getMember().getId());
         artwork.setStatus(Status.UPLOAD_PENDING);
         artwork = artworkRepository.save(artwork);
         return artworkMapper.toDto(artwork);
@@ -133,20 +132,21 @@ public class ArtworkUsecaseImpl implements ArtworkUsecase, MemberInPort {
     @Override
     public ArtworkDTO save(ArtworkDTO artworkDTO) {
         log.debug("Request to save Artwork : {}", artworkDTO);
-//        this.memberProducer.requestMemberName(artworkDTO.getMember().getId());
 
         Artwork artwork = artworkMapper.toEntity(artworkDTO);
+        memberProducer.requestMemberName(artwork.getMember().getId());
         artwork.setStatus(Status.OK);
         artwork = artworkRepository.save(artwork);
         return artworkMapper.toDto(artwork);
     }
 
-    @Override
-    public void updateMemberName(Long id, String name) {
+    public void modifyMemberName(long id, String name) {
         log.debug("Request to update Artwork : {}", id);
         artworkRepository.findAllByMemberId(id).forEach(artwork -> {
             artwork.getMember().setName(name);
             artworkRepository.save(artwork);
         });
     }
+
+
 }

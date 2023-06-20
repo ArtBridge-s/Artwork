@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 /**
  * Spring Data JPA repository for the Comment entity.
  */
@@ -14,4 +16,6 @@ import org.springframework.stereotype.Repository;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Page<Comment> findByArtwork_Id(Pageable pageable, Long artworkId);
     boolean existsByArtwork_Id(Long artworkId);
+
+    Set<Comment> findCommentsByMember_Id(long id);
 }

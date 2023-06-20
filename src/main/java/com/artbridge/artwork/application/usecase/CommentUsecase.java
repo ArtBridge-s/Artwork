@@ -66,4 +66,6 @@ public interface CommentUsecase {
      * @return 페이지네이션된 Comment 리스트를 담은 Page 객체
      */
     Page<CommentDTO> findByArtwokId(Pageable pageable, Long artworkId);
+
+    void modifyMemberName(long id, String name);
 }
