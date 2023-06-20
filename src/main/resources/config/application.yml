@@ -129,6 +129,8 @@ management:
 spring:
   kafka:
     properties:
+      key.serializer.encoding: UTF-8
+      value.serializer.encoding: UTF-8
       sasl:
         mechanism: PLAIN
         jaas:
