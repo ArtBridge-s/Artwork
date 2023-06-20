@@ -119,4 +119,6 @@ public interface ArtworkUsecase {
      * @return 저장된 ArtworkDTO 객체
      */
     ArtworkDTO save(ArtworkDTO artworkDTO);
+
+    void modifyMemberName(long id, String name);
 }

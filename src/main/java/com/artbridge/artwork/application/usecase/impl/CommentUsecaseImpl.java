@@ -2,6 +2,7 @@ package com.artbridge.artwork.application.usecase.impl;
 
 import com.artbridge.artwork.application.usecase.CommentUsecase;
 import com.artbridge.artwork.domain.model.Comment;
+import com.artbridge.artwork.infrastructure.messaging.MemberProducer;
 import com.artbridge.artwork.infrastructure.repository.CommentRepository;
 import com.artbridge.artwork.application.dto.CommentDTO;
 import com.artbridge.artwork.application.mapper.CommentMapper;
@@ -26,9 +27,13 @@ public class CommentUsecaseImpl implements CommentUsecase {
 
     private final CommentMapper commentMapper;
 
-    public CommentUsecaseImpl(CommentRepository commentRepository, CommentMapper commentMapper) {
+    private final MemberProducer memberProducer;
+
+
+    public CommentUsecaseImpl(CommentRepository commentRepository, CommentMapper commentMapper, MemberProducer memberProducer) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
+        this.memberProducer = memberProducer;
     }
 
     @Override
@@ -36,6 +41,8 @@ public class CommentUsecaseImpl implements CommentUsecase {
         log.debug("Request to save Comment : {}", commentDTO);
         Comment comment = commentMapper.toEntity(commentDTO);
         /*TODO: - Event memberDto name*/
+        this.memberProducer.requestMemberName(comment.getMember().getId());
+
         comment = commentRepository.save(comment);
         return commentMapper.toDto(comment);
     }
@@ -87,5 +94,14 @@ public class CommentUsecaseImpl implements CommentUsecase {
     public Page<CommentDTO> findByArtwokId(Pageable pageable, Long artworkId) {
         log.debug("Request to get Comment : {}", artworkId);
         return commentRepository.findByArtwork_Id(pageable, artworkId).map(commentMapper::toDto);
+    }
+
+    @Override
+    public void modifyMemberName(long id, String name) {
+        log.debug("Request to modify member name : {}", id);
+        commentRepository.findCommentsByMember_Id(id).forEach(comment -> {
+            comment.setMemberName(name);
+            commentRepository.save(comment);
+        });
     }
 }
